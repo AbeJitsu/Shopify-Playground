@@ -1,18 +1,25 @@
 {%- style -%}
-  /* Linens & Hutch Announcement Bar */
+  /* Linens & Hutch Announcement Bar - LARGER FONTS */
   .lh-announcement {
     background: #1a1a1a;
     color: #fff;
     text-align: center;
-    padding: 0.875rem 1rem;
+    padding: 1rem 1.5rem;
   }
 
   .lh-announcement__text {
-    font-size: 0.75rem;
+    font-size: 0.9375rem;
     font-weight: 500;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lh-announcement__text {
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+    }
   }
 
   .lh-announcement__text a {
@@ -27,14 +34,8 @@
 
   .lh-announcement__divider {
     display: inline-block;
-    margin: 0 0.75rem;
+    margin: 0 1rem;
     opacity: 0.5;
-  }
-
-  @media screen and (min-width: 750px) {
-    .lh-announcement__text {
-      font-size: 0.8125rem;
-    }
   }
 {%- endstyle -%}
 

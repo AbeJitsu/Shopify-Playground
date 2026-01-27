@@ -3,15 +3,29 @@
 {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  /* Linens & Hutch Hero Styles - IMPROVED */
+  /* Linens & Hutch Hero Styles - LARGER FONTS */
   .lh-hero {
     position: relative;
+  }
+
+  .lh-hero .slideshow.banner {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lh-hero .slideshow.banner::-webkit-scrollbar {
+    display: none;
   }
 
   .lh-hero__slide {
     position: relative;
     min-height: 85vh;
-    max-height: 800px;
+    max-height: 850px;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
   }
 
   @media screen and (min-width: 750px) {
@@ -47,7 +61,7 @@
     display: flex;
     align-items: center;
     min-height: 85vh;
-    max-height: 800px;
+    max-height: 850px;
     padding: 2rem;
   }
 
@@ -59,42 +73,60 @@
   }
 
   .lh-hero__text {
-    max-width: 550px;
+    max-width: 650px;
   }
 
   .lh-hero__eyebrow {
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: 500;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: #8b7355;
-    margin: 0 0 1rem;
+    margin: 0 0 1.5rem;
     display: block;
   }
 
+  @media screen and (min-width: 750px) {
+    .lh-hero__eyebrow {
+      font-size: 1.125rem;
+    }
+  }
+
   .lh-hero__heading {
-    font-size: 2.5rem;
+    font-size: 2.75rem;
     font-weight: 300;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    margin: 0 0 1rem;
+    margin: 0 0 1.25rem;
     color: #1a1a1a;
-    line-height: 1.2;
+    line-height: 1.15;
   }
 
   @media screen and (min-width: 750px) {
     .lh-hero__heading {
-      font-size: 3.5rem;
+      font-size: 4rem;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .lh-hero__heading {
+      font-size: 4.5rem;
     }
   }
 
   .lh-hero__subheading {
-    font-size: 1rem;
+    font-size: 1.125rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #666;
-    margin: 0 0 2rem;
-    font-weight: 300;
+    color: #555;
+    margin: 0 0 2.5rem;
+    font-weight: 400;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lh-hero__subheading {
+      font-size: 1.375rem;
+    }
   }
 
   .lh-hero__button {
@@ -103,13 +135,20 @@
     gap: 0.75rem;
     background: #1a1a1a;
     color: #fff;
-    padding: 1.25rem 2.5rem;
+    padding: 1.25rem 2.75rem;
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 1rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: 500;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lh-hero__button {
+      font-size: 1.0625rem;
+      padding: 1.5rem 3rem;
+    }
   }
 
   .lh-hero__button:hover {
@@ -127,31 +166,68 @@
     transform: translateX(4px);
   }
 
-  /* Improved slider controls */
+  /* Slider controls */
   .lh-hero .slideshow__controls {
     position: absolute;
-    bottom: 2rem;
+    bottom: 2.5rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(10px);
-    padding: 0.75rem 1.5rem;
+    padding: 1rem 1.75rem;
     border-radius: 50px;
+    border: none;
+  }
+
+  .lh-hero .slider-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .lh-hero .slider-button:hover {
+    opacity: 0.6;
+  }
+
+  .lh-hero .slider-button svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .lh-hero .slider-button--prev svg {
+    transform: rotate(90deg);
+  }
+
+  .lh-hero .slider-button--next svg {
+    transform: rotate(-90deg);
+  }
+
+  .lh-hero .slider-counter__link--dots {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
   }
 
   .lh-hero .slider-counter__link--dots .dot {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background: #ccc;
     border-radius: 50%;
+    display: block;
     transition: all 0.3s ease;
   }
 
-  .lh-hero .slider-counter__link--dots.active .dot,
+  .lh-hero .slider-counter__link--dots.slider-counter__link--active .dot,
   .lh-hero .slider-counter__link--dots:hover .dot {
     background: #1a1a1a;
     transform: scale(1.2);
@@ -234,7 +310,7 @@
                 href="{{ block.settings.link | default: '#' }}"
                 class="lh-hero__button"
               >
-                {{ block.settings.button_label }} &gt;
+                {{ block.settings.button_label }}
               </a>
             {%- endif -%}
           </div>
@@ -260,7 +336,7 @@
         <div class="slideshow__control-wrapper">
           {%- for block in section.blocks -%}
             <button
-              class="slider-counter__link slider-counter__link--dots link"
+              class="slider-counter__link slider-counter__link--dots link{% if forloop.first %} slider-counter__link--active{% endif %}"
               aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
               aria-controls="Slider-{{ section.id }}"
             >

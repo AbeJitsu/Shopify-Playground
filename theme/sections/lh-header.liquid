@@ -1,7 +1,7 @@
 {{ 'section-header.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  /* Linens & Hutch Header Styles */
+  /* Linens & Hutch Header Styles - LARGER FONTS */
   .lh-header {
     position: sticky;
     top: 0;
@@ -13,7 +13,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 2rem;
+    padding: 1.75rem 2rem;
     max-width: 1400px;
     margin: 0 auto;
   }
@@ -22,8 +22,8 @@
   .lh-header__right {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    min-width: 100px;
+    gap: 1.5rem;
+    min-width: 120px;
   }
 
   .lh-header__left {
@@ -39,9 +39,35 @@
     text-align: center;
   }
 
+  .lh-header__logo-link {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .lh-header__logo-image {
+    height: 40px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lh-header__logo-image {
+      height: 50px;
+      max-width: 280px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .lh-header__logo-image {
+      height: 55px;
+      max-width: 320px;
+    }
+  }
+
   .lh-header__logo-text {
     font-family: 'Playfair Display', 'Times New Roman', serif;
-    font-size: 2rem;
+    font-size: 2.25rem;
     font-weight: 400;
     font-style: italic;
     color: #1a1a1a;
@@ -51,7 +77,13 @@
 
   @media screen and (min-width: 750px) {
     .lh-header__logo-text {
-      font-size: 2.5rem;
+      font-size: 2.75rem;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .lh-header__logo-text {
+      font-size: 3rem;
     }
   }
 
@@ -59,8 +91,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -73,8 +105,8 @@
   }
 
   .lh-header__icon svg {
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
     stroke-width: 1.5;
   }
 
@@ -84,10 +116,10 @@
     right: -4px;
     background: #1a1a1a;
     color: #fff;
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -104,17 +136,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
     list-style: none;
     margin: 0;
-    padding: 1rem 2rem;
+    padding: 1.25rem 2rem;
     max-width: 1400px;
     margin: 0 auto;
   }
 
   @media screen and (min-width: 990px) {
     .lh-nav__list {
-      gap: 2rem;
+      gap: 2.5rem;
     }
   }
 
@@ -125,16 +157,22 @@
   .lh-nav__link {
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
-    font-size: 0.8125rem;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
     font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #1a1a1a;
     text-decoration: none;
-    padding: 0.5rem 0;
+    padding: 0.625rem 0;
     border-bottom: 2px solid transparent;
     transition: all 0.3s ease;
+  }
+
+  @media screen and (min-width: 990px) {
+    .lh-nav__link {
+      font-size: 1rem;
+    }
   }
 
   .lh-nav__link:hover {
@@ -142,8 +180,8 @@
   }
 
   .lh-nav__link svg {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     transition: transform 0.3s ease;
   }
 
@@ -180,8 +218,8 @@
     left: 50%;
     transform: translateX(-50%);
     background: #fff;
-    min-width: 200px;
-    padding: 1rem 0;
+    min-width: 220px;
+    padding: 1.25rem 0;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     opacity: 0;
     visibility: hidden;
@@ -196,11 +234,11 @@
 
   .lh-nav__dropdown-link {
     display: block;
-    padding: 0.625rem 1.5rem;
-    font-size: 0.8125rem;
+    padding: 0.75rem 1.75rem;
+    font-size: 0.9375rem;
     font-weight: 400;
     letter-spacing: 0.05em;
-    color: #666;
+    color: #555;
     text-decoration: none;
     transition: all 0.2s ease;
   }
@@ -233,8 +271,13 @@
     </div>
 
     <div class="lh-header__logo">
-      <a href="{{ routes.root_url }}" class="lh-header__logo-text">
-        {{ section.settings.logo_text | default: 'Linens & Hutch' }}
+      <a href="{{ routes.root_url }}" class="lh-header__logo-link">
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: height: 110 | image_tag: class: 'lh-header__logo-image', alt: shop.name }}
+        {%- else -%}
+          <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="lh-header__logo-image" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
+          <span class="lh-header__logo-text" style="display:none;">{{ section.settings.logo_text | default: 'Linens & Hutch' }}</span>
+        {%- endif -%}
       </a>
     </div>
 
@@ -312,9 +355,14 @@
   "class": "section section--lh-header",
   "settings": [
     {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
       "type": "text",
       "id": "logo_text",
-      "label": "Logo text",
+      "label": "Logo text (fallback)",
       "default": "Linens & Hutch"
     }
   ],
