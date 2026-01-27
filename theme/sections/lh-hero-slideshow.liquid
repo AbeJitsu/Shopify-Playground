@@ -62,9 +62,13 @@
     z-index: 2;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     min-height: 450px;
     max-height: 550px;
     padding: 2rem;
+    max-width: none;
+    width: 100%;
+    margin: 0;
   }
 
   @media screen and (min-width: 750px) {
@@ -76,7 +80,7 @@
   }
 
   .lh-hero__text {
-    max-width: 650px;
+    max-width: 550px;
   }
 
   .lh-hero__content--right {
@@ -100,11 +104,11 @@
   }
 
   .lh-hero__heading {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 300;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    margin: 0 0 1.25rem;
+    margin: 0 0 0.75rem;
     color: #1a1a1a;
     line-height: 1.15;
     text-shadow: 0 0 30px rgba(255,255,255,0.9), 0 0 60px rgba(255,255,255,0.6);
@@ -118,23 +122,23 @@
 
   @media screen and (min-width: 990px) {
     .lh-hero__heading {
-      font-size: 2.5rem;
+      font-size: 3rem;
     }
   }
 
   .lh-hero__subheading {
-    font-size: 1.125rem;
+    font-size: 1rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #555;
-    margin: 0 0 2.5rem;
+    margin: 0 0 1.5rem;
     font-weight: 400;
     text-shadow: 0 0 20px rgba(255,255,255,0.9), 0 0 40px rgba(255,255,255,0.6);
   }
 
   @media screen and (min-width: 750px) {
     .lh-hero__subheading {
-      font-size: 1.375rem;
+      font-size: 1.25rem;
     }
   }
 
@@ -175,21 +179,23 @@
     transform: translateX(4px);
   }
 
-  /* Slider controls */
+  /* Slider controls - glassmorphism effect */
   .lh-hero .slideshow__controls {
     position: absolute;
-    bottom: 2.5rem;
+    bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(10px);
-    padding: 1rem 1.75rem;
+    gap: 0.75rem;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0.6rem 1.25rem;
     border-radius: 50px;
-    border: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   }
 
   .lh-hero .slider-button {
@@ -208,8 +214,9 @@
   }
 
   .lh-hero .slider-button svg {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
+    opacity: 0.6;
   }
 
   .lh-hero .slider-button--prev svg {
@@ -224,13 +231,13 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.35rem;
   }
 
   .lh-hero .slider-counter__link--dots .dot {
-    width: 12px;
-    height: 12px;
-    background: #ccc;
+    width: 8px;
+    height: 8px;
+    background: rgba(0,0,0,0.25);
     border-radius: 50%;
     display: block;
     transition: all 0.3s ease;
@@ -238,8 +245,8 @@
 
   .lh-hero .slider-counter__link--dots.slider-counter__link--active .dot,
   .lh-hero .slider-counter__link--dots:hover .dot {
-    background: #1a1a1a;
-    transform: scale(1.2);
+    background: rgba(0,0,0,0.7);
+    transform: scale(1.15);
   }
 {%- endstyle -%}
 
