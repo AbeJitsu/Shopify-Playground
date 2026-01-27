@@ -275,7 +275,7 @@
         {%- if section.settings.logo != blank -%}
           {{ section.settings.logo | image_url: height: 110 | image_tag: class: 'lh-header__logo-image', alt: shop.name }}
         {%- else -%}
-          <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="lh-header__logo-image" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
+          <img src="{{ 'L_H_LOGO_.avif' | asset_url }}" alt="{{ shop.name }}" class="lh-header__logo-image" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
           <span class="lh-header__logo-text" style="display:none;">{{ section.settings.logo_text | default: 'Linens & Hutch' }}</span>
         {%- endif -%}
       </a>
