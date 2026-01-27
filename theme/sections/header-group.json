@@ -2,43 +2,90 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "announcement-bar": {
-      "type": "announcement-bar",
+    "lh-announcement": {
+      "type": "lh-announcement-bar",
       "blocks": {
-        "announcement-bar-0": {
+        "announcement-1": {
           "type": "announcement",
           "settings": {
-            "text": "Welcome to our store",
-            "text_alignment": "center",
-            "color_scheme": "scheme-1",
-            "link": ""
+            "text": "FREE SHIPPING & RETURNS"
+          }
+        },
+        "announcement-2": {
+          "type": "announcement",
+          "settings": {
+            "text": "101-NIGHT GUARANTEE"
           }
         }
       },
       "block_order": [
-        "announcement-bar-0"
+        "announcement-1",
+        "announcement-2"
       ]
     },
-    "header": {
-      "type": "header",
+    "lh-header": {
+      "type": "lh-header",
+      "blocks": {
+        "nav-bedding": {
+          "type": "nav_item",
+          "settings": {
+            "title": "BEDDING",
+            "has_dropdown": true,
+            "dropdown_text_1": "Sheets",
+            "dropdown_text_2": "Comforters",
+            "dropdown_text_3": "Duvet Covers",
+            "dropdown_text_4": "Quilts"
+          }
+        },
+        "nav-pillows": {
+          "type": "nav_item",
+          "settings": {
+            "title": "PILLOWS & THROWS",
+            "has_dropdown": true,
+            "dropdown_text_1": "Throw Pillows",
+            "dropdown_text_2": "Blankets & Throws",
+            "dropdown_text_3": "Pillow Inserts"
+          }
+        },
+        "nav-bath": {
+          "type": "nav_item",
+          "settings": {
+            "title": "BATH & DECOR",
+            "has_dropdown": true,
+            "dropdown_text_1": "Bath Towels",
+            "dropdown_text_2": "Hand Towels",
+            "dropdown_text_3": "Bath Mats"
+          }
+        },
+        "nav-new": {
+          "type": "nav_item",
+          "settings": {
+            "title": "NEW ARRIVALS",
+            "has_dropdown": false
+          }
+        },
+        "nav-best": {
+          "type": "nav_item",
+          "settings": {
+            "title": "BEST SELLERS",
+            "has_dropdown": false
+          }
+        }
+      },
+      "block_order": [
+        "nav-bedding",
+        "nav-pillows",
+        "nav-bath",
+        "nav-new",
+        "nav-best"
+      ],
       "settings": {
-        "color_scheme": "scheme-1",
-        "logo_position": "middle-left",
-        "menu": "main-menu",
-        "menu_type_desktop": "dropdown",
-        "sticky_header_type": "on-scroll-up",
-        "show_line_separator": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "mobile_logo_position": "center",
-        "margin_bottom": 0,
-        "padding_top": 20,
-        "padding_bottom": 20
+        "logo_text": "Linens & Hutch"
       }
     }
   },
   "order": [
-    "announcement-bar",
-    "header"
+    "lh-announcement",
+    "lh-header"
   ]
 }
