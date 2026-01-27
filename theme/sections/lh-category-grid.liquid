@@ -1,0 +1,314 @@
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  /* Linens & Hutch Category Grid Styles - IMPROVED */
+  .lh-categories {
+    padding: 5rem 0 6rem;
+    background: linear-gradient(180deg, #fff 0%, #fafaf8 100%);
+  }
+
+  .lh-categories__header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .lh-categories__title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin: 0 0 0.75rem;
+    color: #1a1a1a;
+  }
+
+  .lh-categories__subtitle {
+    font-size: 1.125rem;
+    color: #666;
+    margin: 0;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .lh-categories__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lh-categories__grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .lh-category-card {
+    text-decoration: none;
+    display: block;
+    position: relative;
+  }
+
+  .lh-category-card__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(135deg, #f8f7f5 0%, #efe9e3 100%);
+    border-radius: 4px;
+  }
+
+  .lh-category-card__image-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.03) 100%);
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .lh-category-card:hover .lh-category-card__image-wrapper::after {
+    opacity: 0;
+  }
+
+  .lh-category-card__image-wrapper img,
+  .lh-category-card__image-wrapper svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .lh-category-card:hover .lh-category-card__image-wrapper img,
+  .lh-category-card:hover .lh-category-card__image-wrapper svg {
+    transform: scale(1.08);
+  }
+
+  .lh-category-card__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    margin-top: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .lh-category-card:hover .lh-category-card__title {
+    border-bottom-color: #1a1a1a;
+  }
+
+  .lh-category-card__title span {
+    transition: transform 0.3s ease;
+    font-size: 1rem;
+  }
+
+  .lh-category-card:hover .lh-category-card__title span {
+    transform: translateX(6px);
+  }
+
+  /* Carousel controls */
+  .lh-categories__slider-wrapper {
+    position: relative;
+  }
+
+  .lh-categories__controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .lh-categories__controls .slider-button {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .lh-categories__controls .slider-button:hover {
+    border-color: #1a1a1a;
+    background: #1a1a1a;
+    color: #fff;
+  }
+
+  .lh-categories__controls .slider-button svg {
+    width: 12px;
+    height: 12px;
+  }
+{%- endstyle -%}
+
+<div class="lh-categories page-width">
+  <div class="lh-categories__header">
+    {%- if section.settings.title != blank -%}
+      <h2 class="lh-categories__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subtitle != blank -%}
+      <p class="lh-categories__subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="lh-categories__slider-wrapper">
+    <div class="lh-categories__grid" id="CategoryGrid-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        <a
+          href="{{ block.settings.link | default: '#' }}"
+          class="lh-category-card"
+          {{ block.shopify_attributes }}
+        >
+          <div class="lh-category-card__image-wrapper">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 800
+                | image_tag:
+                  loading: 'lazy',
+                  sizes: '(min-width: 750px) 25vw, 50vw',
+                  widths: '200, 300, 400, 500, 600, 800'
+              }}
+            {%- else -%}
+              {%- case forloop.index -%}
+                {%- when 1 -%}
+                  <img src="{{ 'category-sheets.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                {%- when 2 -%}
+                  <img src="{{ 'category-comforter.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                {%- when 3 -%}
+                  <img src="{{ 'category-duvet.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                {%- when 4 -%}
+                  <img src="{{ 'category-quilts.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                {%- when 5 -%}
+                  <img src="{{ 'category-essentials.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                {%- when 6 -%}
+                  <img src="{{ 'category-pillows.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                {%- when 7 -%}
+                  <img src="{{ 'category-blankets.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                {%- when 8 -%}
+                  <img src="{{ 'category-bath.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                {%- else -%}
+                  <img src="{{ 'category-sheets.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+              {%- endcase -%}
+            {%- endif -%}
+          </div>
+          <h3 class="lh-category-card__title">
+            {{ block.settings.title | default: 'Category' }}<span>&rarr;</span>
+          </h3>
+        </a>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.blocks.size > 4 -%}
+      <div class="lh-categories__controls">
+        <button
+          type="button"
+          class="slider-button slider-button--prev"
+          name="previous"
+          aria-label="Previous categories"
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </button>
+        <button
+          type="button"
+          class="slider-button slider-button--next"
+          name="next"
+          aria-label="Next categories"
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "LH Category Grid",
+  "tag": "section",
+  "class": "section section--lh-categories",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "SHOP BY CATEGORY"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Everything you need to build your bedroom sanctuary."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category name",
+          "default": "SHEETS"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LH Category Grid",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "SHEETS"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "COMFORTERS"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "DUVET COVERS"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "QUILTS"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

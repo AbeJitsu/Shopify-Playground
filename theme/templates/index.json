@@ -1,0 +1,150 @@
+{
+  "sections": {
+    "lh_hero": {
+      "type": "lh-hero-slideshow",
+      "blocks": {
+        "slide_towels": {
+          "type": "slide",
+          "settings": {
+            "heading": "TOWELS MADE FOR EVERYDAY LUXURY",
+            "subheading": "SOFT, ABSORBENT, AND TIMELESS",
+            "button_label": "SHOP NOW"
+          }
+        },
+        "slide_texture": {
+          "type": "slide",
+          "settings": {
+            "heading": "LAYER YOUR BED WITH TEXTURE",
+            "subheading": "COZY QUILTS AND COMFORTERS",
+            "button_label": "SHOP THE COLLECTION"
+          }
+        },
+        "slide_silk": {
+          "type": "slide",
+          "settings": {
+            "heading": "SLEEP ON SILK",
+            "subheading": "LUXURIOUS SILK PILLOWCASES",
+            "button_label": "SHOP NOW"
+          }
+        }
+      },
+      "block_order": [
+        "slide_towels",
+        "slide_texture",
+        "slide_silk"
+      ],
+      "settings": {
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "accessibility_info": "Slideshow featuring our latest bedding collections"
+      }
+    },
+    "lh_categories": {
+      "type": "lh-category-grid",
+      "blocks": {
+        "cat_sheets": {
+          "type": "category",
+          "settings": {
+            "title": "SHEETS"
+          }
+        },
+        "cat_comforters": {
+          "type": "category",
+          "settings": {
+            "title": "COMFORTERS"
+          }
+        },
+        "cat_duvet": {
+          "type": "category",
+          "settings": {
+            "title": "DUVET COVERS"
+          }
+        },
+        "cat_quilts": {
+          "type": "category",
+          "settings": {
+            "title": "QUILTS"
+          }
+        },
+        "cat_essentials": {
+          "type": "category",
+          "settings": {
+            "title": "BEDDING ESSENTIALS"
+          }
+        },
+        "cat_pillows": {
+          "type": "category",
+          "settings": {
+            "title": "THROW PILLOWS"
+          }
+        },
+        "cat_blankets": {
+          "type": "category",
+          "settings": {
+            "title": "BLANKETS & THROWS"
+          }
+        },
+        "cat_bath": {
+          "type": "category",
+          "settings": {
+            "title": "BATH"
+          }
+        }
+      },
+      "block_order": [
+        "cat_sheets",
+        "cat_comforters",
+        "cat_duvet",
+        "cat_quilts",
+        "cat_essentials",
+        "cat_pillows",
+        "cat_blankets",
+        "cat_bath"
+      ],
+      "settings": {
+        "title": "SHOP BY CATEGORY",
+        "subtitle": "Everything you need to build your bedroom sanctuary."
+      }
+    },
+    "lh_commitment": {
+      "type": "lh-commitment",
+      "blocks": {
+        "feature_shipping": {
+          "type": "feature",
+          "settings": {
+            "icon": "shipping",
+            "text": "Free Shipping & Returns"
+          }
+        },
+        "feature_guarantee": {
+          "type": "feature",
+          "settings": {
+            "icon": "guarantee",
+            "text": "101-Night Guarantee"
+          }
+        },
+        "feature_support": {
+          "type": "feature",
+          "settings": {
+            "icon": "support",
+            "text": "Dedicated Support"
+          }
+        }
+      },
+      "block_order": [
+        "feature_shipping",
+        "feature_guarantee",
+        "feature_support"
+      ],
+      "settings": {
+        "title": "OUR COMMITMENT TO YOU",
+        "text": "At Linens & Hutch, our mission is to provide you with the highest quality bedding products at unbeatable prices. We back our products with a 100% money-back guarantee. If you're not completely satisfied with your purchase, our dedicated customer support team is here to ensure your satisfaction."
+      }
+    }
+  },
+  "order": [
+    "lh_hero",
+    "lh_categories",
+    "lh_commitment"
+  ]
+}

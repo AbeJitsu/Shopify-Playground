@@ -1,0 +1,384 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  /* Linens & Hutch Hero Styles - IMPROVED */
+  .lh-hero {
+    position: relative;
+  }
+
+  .lh-hero__slide {
+    position: relative;
+    min-height: 85vh;
+    max-height: 800px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lh-hero__slide {
+      min-height: 90vh;
+    }
+  }
+
+  .lh-hero__media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .lh-hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,0) 70%);
+    pointer-events: none;
+  }
+
+  .lh-hero__media img,
+  .lh-hero__media svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lh-hero__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    min-height: 85vh;
+    max-height: 800px;
+    padding: 2rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lh-hero__content {
+      min-height: 90vh;
+      padding: 4rem 6rem;
+    }
+  }
+
+  .lh-hero__text {
+    max-width: 550px;
+  }
+
+  .lh-hero__eyebrow {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #8b7355;
+    margin: 0 0 1rem;
+    display: block;
+  }
+
+  .lh-hero__heading {
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+    color: #1a1a1a;
+    line-height: 1.2;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lh-hero__heading {
+      font-size: 3.5rem;
+    }
+  }
+
+  .lh-hero__subheading {
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #666;
+    margin: 0 0 2rem;
+    font-weight: 300;
+  }
+
+  .lh-hero__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #1a1a1a;
+    color: #fff;
+    padding: 1.25rem 2.5rem;
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+  }
+
+  .lh-hero__button:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  .lh-hero__button::after {
+    content: '→';
+    transition: transform 0.3s ease;
+  }
+
+  .lh-hero__button:hover::after {
+    transform: translateX(4px);
+  }
+
+  /* Improved slider controls */
+  .lh-hero .slideshow__controls {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+  }
+
+  .lh-hero .slider-counter__link--dots .dot {
+    width: 10px;
+    height: 10px;
+    background: #ccc;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .lh-hero .slider-counter__link--dots.active .dot,
+  .lh-hero .slider-counter__link--dots:hover .dot {
+    background: #1a1a1a;
+    transform: scale(1.2);
+  }
+{%- endstyle -%}
+
+<slideshow-component
+  class="lh-hero"
+  role="region"
+  aria-roledescription="{{ 'sections.slideshow.carousel' | t }}"
+  aria-label="{{ section.settings.accessibility_info | escape }}"
+>
+  <div
+    class="slideshow banner grid grid--1-col slider slider--everywhere"
+    id="Slider-{{ section.id }}"
+    aria-live="polite"
+    aria-atomic="true"
+    data-autoplay="{{ section.settings.auto_rotate }}"
+    data-speed="{{ section.settings.change_slides_speed }}"
+  >
+    {%- for block in section.blocks -%}
+      <div
+        class="lh-hero__slide slideshow__slide grid__item grid--1-col slider__slide"
+        id="Slide-{{ section.id }}-{{ forloop.index }}"
+        {{ block.shopify_attributes }}
+        role="group"
+        aria-roledescription="{{ 'sections.slideshow.slide' | t }}"
+        aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+        tabindex="-1"
+      >
+        <div class="lh-hero__media">
+          {%- if block.settings.image -%}
+            {%- liquid
+              assign height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round
+              assign sizes = '100vw'
+              assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+              assign fetch_priority = 'auto'
+              if section.index == 1 and forloop.first
+                assign fetch_priority = 'high'
+              endif
+            -%}
+            {{
+              block.settings.image
+              | image_url: width: 3840
+              | image_tag:
+                loading: 'lazy',
+                height: height,
+                sizes: sizes,
+                widths: widths,
+                fetchpriority: fetch_priority
+            }}
+          {%- elsif block.settings.asset_image != blank -%}
+            <img src="{{ block.settings.asset_image | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+          {%- else -%}
+            {%- case forloop.index -%}
+              {%- when 1 -%}
+                <img src="{{ 'hero-towels.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+              {%- when 2 -%}
+                <img src="{{ 'hero-bedroom.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+              {%- when 3 -%}
+                <img src="{{ 'hero-sheets.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+              {%- else -%}
+                <img src="{{ 'hero-towels.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+            {%- endcase -%}
+          {%- endif -%}
+        </div>
+
+        <div class="lh-hero__content page-width">
+          <div class="lh-hero__text">
+            {%- if block.settings.heading != blank -%}
+              <h2 class="lh-hero__heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+
+            {%- if block.settings.subheading != blank -%}
+              <p class="lh-hero__subheading">{{ block.settings.subheading }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.button_label != blank -%}
+              <a
+                href="{{ block.settings.link | default: '#' }}"
+                class="lh-hero__button"
+              >
+                {{ block.settings.button_label }} &gt;
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="slideshow__controls slider-buttons">
+      <button
+        type="button"
+        class="slider-button slider-button--prev"
+        name="previous"
+        aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+      <div class="slider-counter slider-counter--dots">
+        <div class="slideshow__control-wrapper">
+          {%- for block in section.blocks -%}
+            <button
+              class="slider-counter__link slider-counter__link--dots link"
+              aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+              aria-controls="Slider-{{ section.id }}"
+            >
+              <span class="dot"></span>
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+      <button
+        type="button"
+        class="slider-button slider-button--next"
+        name="next"
+        aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+        aria-controls="Slider-{{ section.id }}"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+    </div>
+  {%- endif -%}
+</slideshow-component>
+
+{%- if request.design_mode -%}
+  <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LH Hero Slideshow",
+  "tag": "section",
+  "class": "section section--lh-hero",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Auto-rotate slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 9,
+      "step": 2,
+      "unit": "s",
+      "label": "Change slides every",
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "accessibility_info",
+      "label": "Slideshow description (for accessibility)",
+      "default": "Slideshow about our brand"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "TOWELS MADE FOR EVERYDAY LUXURY"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "SOFT, ABSORBENT, AND TIMELESS"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LH Hero Slideshow",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "heading": "TOWELS MADE FOR EVERYDAY LUXURY",
+            "subheading": "SOFT, ABSORBENT, AND TIMELESS",
+            "button_label": "SHOP NOW"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "heading": "LAYER YOUR BED WITH TEXTURE",
+            "subheading": "COZY QUILTS AND COMFORTERS",
+            "button_label": "SHOP THE COLLECTION"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
