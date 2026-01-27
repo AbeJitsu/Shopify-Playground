@@ -22,15 +22,16 @@
 
   .lh-hero__slide {
     position: relative;
-    min-height: 85vh;
-    max-height: 850px;
+    min-height: 450px;
+    max-height: 550px;
     flex: 0 0 100%;
     scroll-snap-align: start;
   }
 
   @media screen and (min-width: 750px) {
     .lh-hero__slide {
-      min-height: 90vh;
+      min-height: 500px;
+      max-height: 600px;
     }
   }
 
@@ -44,7 +45,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,0) 70%);
+    background: linear-gradient(90deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0) 50%);
     pointer-events: none;
   }
 
@@ -60,15 +61,16 @@
     z-index: 2;
     display: flex;
     align-items: center;
-    min-height: 85vh;
-    max-height: 850px;
+    min-height: 450px;
+    max-height: 550px;
     padding: 2rem;
   }
 
   @media screen and (min-width: 750px) {
     .lh-hero__content {
-      min-height: 90vh;
-      padding: 4rem 6rem;
+      min-height: 500px;
+      max-height: 600px;
+      padding: 3rem 5rem;
     }
   }
 
@@ -100,6 +102,7 @@
     margin: 0 0 1.25rem;
     color: #1a1a1a;
     line-height: 1.15;
+    text-shadow: 0 0 30px rgba(255,255,255,0.9), 0 0 60px rgba(255,255,255,0.6);
   }
 
   @media screen and (min-width: 750px) {
@@ -121,6 +124,7 @@
     color: #555;
     margin: 0 0 2.5rem;
     font-weight: 400;
+    text-shadow: 0 0 20px rgba(255,255,255,0.9), 0 0 40px rgba(255,255,255,0.6);
   }
 
   @media screen and (min-width: 750px) {
@@ -284,13 +288,17 @@
           {%- else -%}
             {%- case forloop.index -%}
               {%- when 1 -%}
-                <img src="{{ 'hero-towels.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+                <img src="{{ 'hero-silk-pillowcases.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
               {%- when 2 -%}
-                <img src="{{ 'hero-bedroom.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+                <img src="{{ 'hero-bamboo-sheets.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
               {%- when 3 -%}
-                <img src="{{ 'hero-sheets.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
-              {%- else -%}
+                <img src="{{ 'hero-cotton-luxury.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+              {%- when 4 -%}
+                <img src="{{ 'hero-texture.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+              {%- when 5 -%}
                 <img src="{{ 'hero-towels.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+              {%- else -%}
+                {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
             {%- endcase -%}
           {%- endif -%}
         </div>
@@ -359,6 +367,56 @@
     </div>
   {%- endif -%}
 </slideshow-component>
+
+<script>
+  (function() {
+    const slider = document.querySelector('#Slider-{{ section.id }}');
+    const autoplay = slider?.dataset.autoplay === 'true';
+    const speed = parseInt(slider?.dataset.speed || 5) * 1000;
+    const dots = document.querySelectorAll('.lh-hero .slider-counter__link--dots');
+    const prevBtn = document.querySelector('.lh-hero .slider-button--prev');
+    const nextBtn = document.querySelector('.lh-hero .slider-button--next');
+
+    if (!slider || !autoplay) return;
+
+    let currentSlide = 0;
+    const slides = slider.querySelectorAll('.lh-hero__slide');
+    const totalSlides = slides.length;
+
+    function goToSlide(index) {
+      currentSlide = index;
+      if (currentSlide >= totalSlides) currentSlide = 0;
+      if (currentSlide < 0) currentSlide = totalSlides - 1;
+
+      const slideWidth = slides[0].offsetWidth;
+      slider.scrollTo({ left: slideWidth * currentSlide, behavior: 'smooth' });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('slider-counter__link--active', i === currentSlide);
+      });
+    }
+
+    function nextSlide() {
+      goToSlide(currentSlide + 1);
+    }
+
+    let autoplayInterval = setInterval(nextSlide, speed);
+
+    // Pause on hover
+    slider.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+    slider.addEventListener('mouseleave', () => {
+      autoplayInterval = setInterval(nextSlide, speed);
+    });
+
+    // Manual controls
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => goToSlide(i));
+    });
+
+    if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+  })();
+</script>
 
 {%- if request.design_mode -%}
   <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
@@ -440,16 +498,16 @@
         {
           "type": "slide",
           "settings": {
-            "heading": "TOWELS MADE FOR EVERYDAY LUXURY",
-            "subheading": "SOFT, ABSORBENT, AND TIMELESS",
+            "heading": "SOFT, BREATHABLE BAMBOO SHEETS",
+            "subheading": "FOR A COOLER SLEEP",
             "button_label": "SHOP NOW"
           }
         },
         {
           "type": "slide",
           "settings": {
-            "heading": "LAYER YOUR BED WITH TEXTURE",
-            "subheading": "COZY QUILTS AND COMFORTERS",
+            "heading": "LAYER YOUR BED IN TEXTURE",
+            "subheading": "",
             "button_label": "SHOP THE COLLECTION"
           }
         }

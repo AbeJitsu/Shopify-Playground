@@ -158,9 +158,9 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #1a1a1a;
     text-decoration: none;
@@ -171,8 +171,8 @@
 
   @media screen and (min-width: 990px) {
     .lh-nav__link {
-      font-size: 0.875rem;
-      letter-spacing: 0.22em;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
     }
   }
 
@@ -277,7 +277,7 @@
         {%- if section.settings.logo != blank -%}
           {{ section.settings.logo | image_url: height: 110 | image_tag: class: 'lh-header__logo-image', alt: shop.name }}
         {%- else -%}
-          <img src="{{ 'L_H_LOGO_.avif' | asset_url }}" alt="{{ shop.name }}" class="lh-header__logo-image" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
+          <img src="{{ 'logo-linens-hutch.avif' | asset_url }}" alt="{{ shop.name }}" class="lh-header__logo-image" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
           <span class="lh-header__logo-text" style="display:none;">{{ section.settings.logo_text | default: 'Linens & Hutch' }}</span>
         {%- endif -%}
       </a>

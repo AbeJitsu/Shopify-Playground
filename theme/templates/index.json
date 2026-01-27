@@ -3,6 +3,38 @@
     "lh_hero": {
       "type": "lh-hero-slideshow",
       "blocks": {
+        "slide_silk": {
+          "type": "slide",
+          "settings": {
+            "heading": "SILK PILLOWCASES",
+            "subheading": "LUXURIOUSLY SMOOTH FOR EFFORTLESS BEAUTY REST",
+            "button_label": "SHOP NOW"
+          }
+        },
+        "slide_bamboo": {
+          "type": "slide",
+          "settings": {
+            "heading": "SOFT, BREATHABLE BAMBOO SHEETS",
+            "subheading": "FOR A COOLER SLEEP",
+            "button_label": "SHOP NOW"
+          }
+        },
+        "slide_cotton": {
+          "type": "slide",
+          "settings": {
+            "heading": "BRING HOME COTTON LUXURY",
+            "subheading": "",
+            "button_label": "SHOP THE COLLECTION"
+          }
+        },
+        "slide_texture": {
+          "type": "slide",
+          "settings": {
+            "heading": "LAYER YOUR BED IN TEXTURE",
+            "subheading": "",
+            "button_label": "SHOP THE COLLECTION"
+          }
+        },
         "slide_towels": {
           "type": "slide",
           "settings": {
@@ -10,28 +42,14 @@
             "subheading": "SOFT, ABSORBENT, AND TIMELESS",
             "button_label": "SHOP NOW"
           }
-        },
-        "slide_texture": {
-          "type": "slide",
-          "settings": {
-            "heading": "LAYER YOUR BED WITH TEXTURE",
-            "subheading": "COZY QUILTS AND COMFORTERS",
-            "button_label": "SHOP THE COLLECTION"
-          }
-        },
-        "slide_silk": {
-          "type": "slide",
-          "settings": {
-            "heading": "SLEEP ON SILK",
-            "subheading": "LUXURIOUS SILK PILLOWCASES",
-            "button_label": "SHOP NOW"
-          }
         }
       },
       "block_order": [
-        "slide_towels",
+        "slide_silk",
+        "slide_bamboo",
+        "slide_cotton",
         "slide_texture",
-        "slide_silk"
+        "slide_towels"
       ],
       "settings": {
         "auto_rotate": true,
@@ -65,41 +83,13 @@
           "settings": {
             "title": "QUILTS"
           }
-        },
-        "cat_essentials": {
-          "type": "category",
-          "settings": {
-            "title": "BEDDING ESSENTIALS"
-          }
-        },
-        "cat_pillows": {
-          "type": "category",
-          "settings": {
-            "title": "THROW PILLOWS"
-          }
-        },
-        "cat_blankets": {
-          "type": "category",
-          "settings": {
-            "title": "BLANKETS & THROWS"
-          }
-        },
-        "cat_bath": {
-          "type": "category",
-          "settings": {
-            "title": "BATH"
-          }
         }
       },
       "block_order": [
         "cat_sheets",
         "cat_comforters",
         "cat_duvet",
-        "cat_quilts",
-        "cat_essentials",
-        "cat_pillows",
-        "cat_blankets",
-        "cat_bath"
+        "cat_quilts"
       ],
       "settings": {
         "title": "SHOP BY CATEGORY",
