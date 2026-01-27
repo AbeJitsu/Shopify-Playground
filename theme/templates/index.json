@@ -8,7 +8,8 @@
           "settings": {
             "heading": "SILK PILLOWCASES",
             "subheading": "LUXURIOUSLY SMOOTH FOR EFFORTLESS BEAUTY REST",
-            "button_label": "SHOP NOW"
+            "button_label": "SHOP NOW",
+            "text_position": "left"
           }
         },
         "slide_bamboo": {
@@ -16,7 +17,8 @@
           "settings": {
             "heading": "SOFT, BREATHABLE BAMBOO SHEETS",
             "subheading": "FOR A COOLER SLEEP",
-            "button_label": "SHOP NOW"
+            "button_label": "SHOP NOW",
+            "text_position": "left"
           }
         },
         "slide_cotton": {
@@ -24,7 +26,8 @@
           "settings": {
             "heading": "BRING HOME COTTON LUXURY",
             "subheading": "",
-            "button_label": "SHOP THE COLLECTION"
+            "button_label": "SHOP THE COLLECTION",
+            "text_position": "right"
           }
         },
         "slide_texture": {
@@ -32,7 +35,8 @@
           "settings": {
             "heading": "LAYER YOUR BED IN TEXTURE",
             "subheading": "",
-            "button_label": "SHOP THE COLLECTION"
+            "button_label": "SHOP THE COLLECTION",
+            "text_position": "left"
           }
         },
         "slide_towels": {
@@ -40,7 +44,8 @@
           "settings": {
             "heading": "TOWELS MADE FOR EVERYDAY LUXURY",
             "subheading": "SOFT, ABSORBENT, AND TIMELESS",
-            "button_label": "SHOP NOW"
+            "button_label": "SHOP NOW",
+            "text_position": "left"
           }
         }
       },
@@ -130,11 +135,62 @@
         "title": "OUR COMMITMENT TO YOU",
         "text": "At Linens & Hutch, our mission is to provide you with the highest quality bedding products at unbeatable prices. We back our products with a 100% money-back guarantee. If you're not completely satisfied with your purchase, our dedicated customer support team is here to ensure your satisfaction."
       }
+    },
+    "lh_benefits": {
+      "type": "lh-benefits-bar",
+      "settings": {}
+    },
+    "lh_new_arrivals": {
+      "type": "lh-featured-collection",
+      "settings": {
+        "title": "JUST IN"
+      }
+    },
+    "lh_promo_pillows": {
+      "type": "lh-image-with-text",
+      "settings": {
+        "heading": "ELEVATE YOUR SPACE WITH LUXE THROW PILLOWS",
+        "text": "Style meets comfort—explore our collection of plush, decorative pillows that add the perfect finishing touch to any room.",
+        "button_label": "SHOP NOW",
+        "image_position": "right"
+      }
+    },
+    "lh_best_sellers": {
+      "type": "lh-featured-collection",
+      "settings": {
+        "title": "EXPERIENCE OUR BEST SELLERS"
+      }
+    },
+    "lh_promo_quilts": {
+      "type": "lh-image-with-text",
+      "settings": {
+        "heading": "COZY UP WITH QUALITY QUILTS",
+        "text": "Timeless comfort meets timeless style—discover our collection of beautifully crafted quilts for every bedroom.",
+        "button_label": "SHOP NOW",
+        "image_position": "left"
+      }
+    },
+    "lh_cotton_sheets": {
+      "type": "lh-featured-collection",
+      "settings": {
+        "title": "COTTON SHEET SETS"
+      }
+    },
+    "lh_instagram": {
+      "type": "lh-instagram-cta",
+      "settings": {}
     }
   },
   "order": [
     "lh_hero",
     "lh_categories",
-    "lh_commitment"
+    "lh_commitment",
+    "lh_benefits",
+    "lh_new_arrivals",
+    "lh_promo_pillows",
+    "lh_best_sellers",
+    "lh_promo_quilts",
+    "lh_cotton_sheets",
+    "lh_instagram"
   ]
 }

@@ -1,0 +1,134 @@
+<section class="lh-instagram-cta" style="background-color: #E5E5DF;">
+  <div class="lh-instagram-cta__content">
+    {% if section.settings.heading %}
+      <h2 class="lh-instagram-cta__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.hashtag %}
+      <div class="lh-instagram-cta__hashtag">{{ section.settings.hashtag }}</div>
+    {% endif %}
+
+    {% if section.settings.description %}
+      <p class="lh-instagram-cta__description">{{ section.settings.description }}</p>
+    {% endif %}
+
+    {% if section.settings.link_url %}
+      <a href="{{ section.settings.link_url }}" class="lh-instagram-cta__link" target="_blank" rel="noopener noreferrer">
+        {{ section.settings.link_text }} →
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .lh-instagram-cta {
+    padding: 5rem 1rem;
+  }
+
+  .lh-instagram-cta__content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .lh-instagram-cta__heading {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    margin: 0 0 1rem 0;
+  }
+
+  .lh-instagram-cta__hashtag {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .lh-instagram-cta__description {
+    font-size: 1rem;
+    color: #1a1a1a;
+    margin: 0 0 2rem 0;
+    line-height: 1.6;
+  }
+
+  .lh-instagram-cta__link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    transition: text-decoration 0.3s ease;
+  }
+
+  .lh-instagram-cta__link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .lh-instagram-cta {
+      padding: 3rem 1rem;
+    }
+
+    .lh-instagram-cta__heading {
+      font-size: 1.25rem;
+    }
+
+    .lh-instagram-cta__hashtag {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Instagram CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "STYLE FOR ALL"
+    },
+    {
+      "type": "text",
+      "id": "hashtag",
+      "label": "Hashtag",
+      "default": "#LINENSANDHUTCH"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Get inspired and shop from their home to yours"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link Text",
+      "default": "LINENS & HUTCH INSTAGRAM"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram CTA",
+      "settings": {
+        "heading": "STYLE FOR ALL",
+        "hashtag": "#LINENSANDHUTCH",
+        "description": "Get inspired and shop from their home to yours",
+        "link_text": "LINENS & HUTCH INSTAGRAM",
+        "link_url": "https://instagram.com/linensandhutch"
+      }
+    }
+  ]
+}
+{% endschema %}

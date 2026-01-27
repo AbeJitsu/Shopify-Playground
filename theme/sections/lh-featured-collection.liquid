@@ -1,0 +1,242 @@
+{%- style -%}
+  .featured-collection {
+    background-color: #fafaf8;
+    padding: 4rem 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .featured-collection {
+      padding: 5rem 2rem;
+    }
+  }
+
+  .featured-collection__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .featured-collection__title {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin: 0 0 0.5rem 0;
+    color: #1a1a1a;
+  }
+
+  @media (min-width: 768px) {
+    .featured-collection__title {
+      font-size: 2.5rem;
+    }
+  }
+
+  .featured-collection__subtitle {
+    font-size: 1rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .featured-collection__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 640px) {
+    .featured-collection__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .featured-collection__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+  }
+
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .product-card__image-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 133.33%;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background-color: #f0ebe3;
+    margin-bottom: 1rem;
+  }
+
+  .product-card__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .product-card__content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card__title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.4;
+  }
+
+  .product-card__rating {
+    font-size: 0.875rem;
+    color: #ffc107;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .product-card__price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-top: auto;
+  }
+
+  .product-card__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+{%- endstyle -%}
+
+<section class="featured-collection">
+  <div class="featured-collection__header">
+    <h2 class="featured-collection__title">{{ section.settings.title }}</h2>
+    {% if section.settings.subtitle != blank %}
+      <p class="featured-collection__subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+  </div>
+
+  <div class="featured-collection__grid">
+    {% for block in section.blocks %}
+      <div class="product-card">
+        <a href="{{ block.settings.product_link }}" class="product-card__link">
+          <div class="product-card__image-container">
+            {% if block.settings.product_image %}
+              <img
+                src="{{ block.settings.product_image | image_url: width: 500 }}"
+                alt="{{ block.settings.product_title }}"
+                class="product-card__image"
+              >
+            {% else %}
+              <div class="product-card__image" style="background-color: #e0d9ce;"></div>
+            {% endif %}
+          </div>
+        </a>
+        <div class="product-card__content">
+          <h3 class="product-card__title">{{ block.settings.product_title }}</h3>
+          <div class="product-card__rating">{{ block.settings.product_rating }}</div>
+          <p class="product-card__price">{{ block.settings.product_price }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Just In"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "Discover new arrivals designed to bring style to every moment."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product Title",
+          "default": "Premium Leather Jacket"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "product_rating",
+          "label": "Product Rating",
+          "default": "★★★★★"
+        },
+        {
+          "type": "text",
+          "id": "product_price",
+          "label": "Product Price",
+          "default": "$89.99"
+        },
+        {
+          "type": "url",
+          "id": "product_link",
+          "label": "Product Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "product_title": "Premium Leather Jacket",
+            "product_rating": "★★★★★",
+            "product_price": "$89.99"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "product_title": "Classic Cotton Tee",
+            "product_rating": "★★★★☆",
+            "product_price": "$29.99"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "product_title": "Denim Blue Jeans",
+            "product_rating": "★★★★★",
+            "product_price": "$64.99"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
