@@ -25,6 +25,75 @@
     },
     "lh-header": {
       "type": "lh-header",
+      "blocks": {
+        "nav-bedding": {
+          "type": "nav_item",
+          "settings": {
+            "title": "BEDDING",
+            "link": "/collections/sheets",
+            "has_dropdown": true,
+            "dropdown_text_1": "Sheets",
+            "dropdown_text_2": "Comforters",
+            "dropdown_text_3": "Duvet Covers",
+            "dropdown_text_4": "Quilts",
+            "dropdown_link_1": "/collections/sheets",
+            "dropdown_link_2": "/collections/comforters",
+            "dropdown_link_3": "/collections/duvet-covers",
+            "dropdown_link_4": "/collections/quilts"
+          }
+        },
+        "nav-pillows": {
+          "type": "nav_item",
+          "settings": {
+            "title": "PILLOWS & THROWS",
+            "link": "/collections/throw-pillows",
+            "has_dropdown": true,
+            "dropdown_text_1": "Throw Pillows",
+            "dropdown_text_2": "Blankets & Throws",
+            "dropdown_text_3": "Pillow Inserts",
+            "dropdown_link_1": "/collections/throw-pillows",
+            "dropdown_link_2": "/collections/blankets",
+            "dropdown_link_3": "/collections/bedding-essentials"
+          }
+        },
+        "nav-bath": {
+          "type": "nav_item",
+          "settings": {
+            "title": "BATH & DECOR",
+            "link": "/collections/bath",
+            "has_dropdown": true,
+            "dropdown_text_1": "Bath Towels",
+            "dropdown_text_2": "Hand Towels",
+            "dropdown_text_3": "Bath Mats",
+            "dropdown_link_1": "/collections/bath",
+            "dropdown_link_2": "/collections/bath",
+            "dropdown_link_3": "/collections/bath"
+          }
+        },
+        "nav-new": {
+          "type": "nav_item",
+          "settings": {
+            "title": "NEW ARRIVALS",
+            "link": "/collections/all",
+            "has_dropdown": false
+          }
+        },
+        "nav-best": {
+          "type": "nav_item",
+          "settings": {
+            "title": "BEST SELLERS",
+            "link": "/collections/all",
+            "has_dropdown": false
+          }
+        }
+      },
+      "block_order": [
+        "nav-bedding",
+        "nav-pillows",
+        "nav-bath",
+        "nav-new",
+        "nav-best"
+      ],
       "settings": {}
     }
   },
