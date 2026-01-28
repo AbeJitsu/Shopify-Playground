@@ -69,6 +69,11 @@
     animation-play-state: paused;
   }
 
+  .lh-categories__track--manual {
+    animation: none;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   @keyframes lh-category-scroll {
     0% {
       transform: translateX(0);
@@ -147,6 +152,80 @@
   .lh-category-card:hover .lh-category-card__title .arrow {
     transform: translateX(4px);
   }
+
+  /* Pill Controller - matches hero slideshow */
+  .lh-categories__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1.5rem auto 0;
+    width: fit-content;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .lh-categories__controls .slider-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .lh-categories__controls .slider-button:hover {
+    opacity: 0.6;
+  }
+
+  .lh-categories__controls .slider-button svg {
+    width: 10px;
+    height: 10px;
+    opacity: 0.6;
+  }
+
+  .lh-categories__controls .slider-button--prev svg {
+    transform: rotate(90deg);
+  }
+
+  .lh-categories__controls .slider-button--next svg {
+    transform: rotate(-90deg);
+  }
+
+  .lh-categories__dots {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .lh-categories__dot {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+  }
+
+  .lh-categories__dot .dot {
+    width: 6px;
+    height: 6px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.3s ease;
+  }
+
+  .lh-categories__dot--active .dot,
+  .lh-categories__dot:hover .dot {
+    background: rgba(0,0,0,0.7);
+    transform: scale(1.15);
+  }
 {%- endstyle -%}
 
 <div class="lh-categories">
@@ -211,8 +290,106 @@
         {%- endfor -%}
       </div>
     </div>
+
+    <div class="lh-categories__controls" id="CategoryControls-{{ section.id }}">
+      <button type="button" class="slider-button slider-button--prev" aria-label="Previous">
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+      <div class="lh-categories__dots">
+        {%- for block in section.blocks -%}
+          <button
+            class="lh-categories__dot{% if forloop.first %} lh-categories__dot--active{% endif %}"
+            aria-label="Go to {{ block.settings.title | default: 'category' }}"
+            data-index="{{ forloop.index0 }}"
+          >
+            <span class="dot"></span>
+          </button>
+        {%- endfor -%}
+      </div>
+      <button type="button" class="slider-button slider-button--next" aria-label="Next">
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+    </div>
   </div>
 </div>
+
+<script>
+  (function() {
+    var sectionId = '{{ section.id }}';
+    var totalCards = {{ section.blocks.size }};
+
+    function init() {
+      var track = document.getElementById('CategoryGrid-' + sectionId);
+      var controls = document.getElementById('CategoryControls-' + sectionId);
+      if (!track || !controls || track.dataset.initialized) return;
+      track.dataset.initialized = 'true';
+
+      var prevBtn = controls.querySelector('.slider-button--prev');
+      var nextBtn = controls.querySelector('.slider-button--next');
+      var dots = controls.querySelectorAll('.lh-categories__dot');
+      var resumeTimer = null;
+      var currentIndex = 0;
+
+      function getCardWidth() {
+        var card = track.querySelector('.lh-category-card');
+        return card ? card.offsetWidth : 0;
+      }
+
+      function setActiveDot(index) {
+        dots.forEach(function(d, i) {
+          d.classList.toggle('lh-categories__dot--active', i === index);
+        });
+      }
+
+      function goToCard(index) {
+        if (index < 0) index = totalCards - 1;
+        if (index >= totalCards) index = 0;
+        currentIndex = index;
+
+        var offsetPx = currentIndex * getCardWidth();
+
+        track.classList.add('lh-categories__track--manual');
+        track.style.transform = 'translateX(-' + offsetPx + 'px)';
+        track.style.animationDelay = '';
+        setActiveDot(currentIndex);
+
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(function() {
+          /* Calculate how far into the 60s animation this offset represents.
+             Total scroll distance = 50% of track width (half, since track is doubled).
+             Current offset as fraction of that = offsetPx / (track.scrollWidth / 2).
+             Negative delay = that fraction * 60s duration. */
+          var totalDistance = track.scrollWidth / 2;
+          var fraction = offsetPx / totalDistance;
+          var delay = -(fraction * 60);
+
+          track.style.transform = '';
+          track.style.animationDelay = delay + 's';
+          track.classList.remove('lh-categories__track--manual');
+        }, 6000);
+      }
+
+      prevBtn.addEventListener('click', function() { goToCard(currentIndex - 1); });
+      nextBtn.addEventListener('click', function() { goToCard(currentIndex + 1); });
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          goToCard(parseInt(this.dataset.index));
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
 
 {% schema %}
 {
