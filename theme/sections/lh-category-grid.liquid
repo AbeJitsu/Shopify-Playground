@@ -118,48 +118,6 @@
   .lh-category-card:hover .lh-category-card__title .arrow {
     transform: translateX(4px);
   }
-
-  /* Carousel controls - centered below */
-  .lh-categories__slider-wrapper {
-    position: relative;
-  }
-
-  .lh-categories__controls {
-    display: flex;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-top: 2.5rem;
-  }
-
-  .lh-categories__controls .slider-button {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-  }
-
-  .lh-categories__controls .slider-button:hover {
-    border-color: #1a1a1a;
-  }
-
-  .lh-categories__controls .slider-button svg {
-    width: 10px;
-    height: 10px;
-  }
-
-  .lh-categories__controls .slider-button--prev svg {
-    transform: rotate(180deg);
-  }
-
-  .lh-categories__controls .slider-button--next svg {
-    transform: rotate(0deg);
-  }
 {%- endstyle -%}
 
 <div class="lh-categories">
@@ -219,29 +177,6 @@
             </h3>
           </a>
         {%- endfor -%}
-      </div>
-
-      <div class="lh-categories__controls">
-        <button
-          type="button"
-          class="slider-button slider-button--prev"
-          name="previous"
-          aria-label="Previous categories"
-        >
-          <svg viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.537.808a.5.5 0 01.817-.162l4 4a.5.5 0 010 .708l-4 4a.5.5 0 11-.708-.708L11.793 5.5H1a.5.5 0 010-1h10.793L8.646 1.354a.5.5 0 01-.109-.546z" fill="currentColor"/>
-          </svg>
-        </button>
-        <button
-          type="button"
-          class="slider-button slider-button--next"
-          name="next"
-          aria-label="Next categories"
-        >
-          <svg viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.537.808a.5.5 0 01.817-.162l4 4a.5.5 0 010 .708l-4 4a.5.5 0 11-.708-.708L11.793 5.5H1a.5.5 0 010-1h10.793L8.646 1.354a.5.5 0 01-.109-.546z" fill="currentColor"/>
-          </svg>
-        </button>
       </div>
     </div>
   </div>
