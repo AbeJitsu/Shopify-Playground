@@ -1,5 +1,5 @@
 {%- style -%}
-  /* Linens & Hutch Commitment Section Styles - LARGER FONTS */
+  /* Linens & Hutch Commitment Section */
   .lh-commitment {
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
     color: #fff;
@@ -33,74 +33,87 @@
   }
 
   .lh-commitment__title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    letter-spacing: 0.25em;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     margin: 0 0 2.5rem;
-    color: #c9a87c;
+    color: #fff;
   }
 
   @media screen and (min-width: 750px) {
     .lh-commitment__title {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
     }
   }
 
   .lh-commitment__text {
     font-size: 1.25rem;
-    line-height: 1.9;
+    line-height: 1.8;
     color: rgba(255, 255, 255, 0.85);
     margin: 0;
     font-weight: 400;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
   }
 
   @media screen and (min-width: 750px) {
     .lh-commitment__text {
-      font-size: 1.5rem;
+      font-size: 1.4375rem;
     }
   }
 
-  .lh-commitment__features {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2.5rem 4rem;
-    margin-top: 4rem;
-    padding-top: 3rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .lh-commitment__feature {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.25rem;
-    font-size: 1rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 500;
+  .lh-commitment__links {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 3.5rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
   }
 
   @media screen and (min-width: 750px) {
-    .lh-commitment__feature {
+    .lh-commitment__links {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .lh-commitment__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.75rem 2rem;
+    background: linear-gradient(135deg, #2a2a2a 0%, #333 50%, #2a2a2a 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lh-commitment__link {
       font-size: 1.125rem;
     }
   }
 
-  .lh-commitment__feature-icon {
-    width: 36px;
-    height: 36px;
-    stroke: #c9a87c;
-    stroke-width: 1.5;
-    fill: none;
-    transition: transform 0.3s ease;
+  .lh-commitment__link:hover {
+    background: linear-gradient(135deg, #333 0%, #3d3d3d 50%, #333 100%);
+    border-color: rgba(255,255,255,0.15);
   }
 
-  .lh-commitment__feature:hover .lh-commitment__feature-icon {
-    transform: scale(1.1);
+  .lh-commitment__link-arrow {
+    transition: transform 0.3s ease;
+    font-size: 1.125rem;
+  }
+
+  .lh-commitment__link:hover .lh-commitment__link-arrow {
+    transform: translateX(4px);
   }
 {%- endstyle -%}
 
@@ -114,40 +127,22 @@
       <p class="lh-commitment__text">{{ section.settings.text }}</p>
     {%- endif -%}
 
-    {%- if section.blocks.size > 0 -%}
-      <div class="lh-commitment__features">
-        {%- for block in section.blocks -%}
-          <div class="lh-commitment__feature" {{ block.shopify_attributes }}>
-            {%- case block.settings.icon -%}
-              {%- when 'shipping' -%}
-                <svg class="lh-commitment__feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                </svg>
-              {%- when 'guarantee' -%}
-                <svg class="lh-commitment__feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  <path d="M9 12l2 2 4-4"/>
-                </svg>
-              {%- when 'support' -%}
-                <svg class="lh-commitment__feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                </svg>
-              {%- when 'quality' -%}
-                <svg class="lh-commitment__feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </svg>
-              {%- else -%}
-                <svg class="lh-commitment__feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M9 12l2 2 4-4"/>
-                </svg>
-            {%- endcase -%}
-            <span>{{ block.settings.text }}</span>
-          </div>
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
   </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="lh-commitment__links">
+      {%- for block in section.blocks -%}
+        <a
+          href="{{ block.settings.link | default: '#' }}"
+          class="lh-commitment__link"
+          {{ block.shopify_attributes }}
+        >
+          {{ block.settings.text }}
+          <span class="lh-commitment__link-arrow">&rarr;</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
 </section>
 
 {% schema %}
@@ -174,42 +169,19 @@
   ],
   "blocks": [
     {
-      "type": "feature",
-      "name": "Feature",
+      "type": "link",
+      "name": "Link",
       "settings": [
-        {
-          "type": "select",
-          "id": "icon",
-          "label": "Icon",
-          "options": [
-            {
-              "value": "shipping",
-              "label": "Shipping"
-            },
-            {
-              "value": "guarantee",
-              "label": "Guarantee"
-            },
-            {
-              "value": "support",
-              "label": "Support"
-            },
-            {
-              "value": "quality",
-              "label": "Quality"
-            },
-            {
-              "value": "check",
-              "label": "Checkmark"
-            }
-          ],
-          "default": "check"
-        },
         {
           "type": "text",
           "id": "text",
           "label": "Text",
-          "default": "Free Shipping"
+          "default": "101-Night Guarantee"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
         }
       ]
     }
@@ -219,24 +191,21 @@
       "name": "LH Commitment",
       "blocks": [
         {
-          "type": "feature",
+          "type": "link",
           "settings": {
-            "icon": "shipping",
-            "text": "Free Shipping & Returns"
-          }
-        },
-        {
-          "type": "feature",
-          "settings": {
-            "icon": "guarantee",
             "text": "101-Night Guarantee"
           }
         },
         {
-          "type": "feature",
+          "type": "link",
           "settings": {
-            "icon": "support",
-            "text": "Dedicated Support"
+            "text": "Free Shipping"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "text": "Free Returns"
           }
         }
       ]

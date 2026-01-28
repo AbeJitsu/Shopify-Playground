@@ -132,32 +132,29 @@
     "lh_commitment": {
       "type": "lh-commitment",
       "blocks": {
-        "feature_shipping": {
-          "type": "feature",
+        "link_guarantee": {
+          "type": "link",
           "settings": {
-            "icon": "shipping",
-            "text": "Free Shipping & Returns"
-          }
-        },
-        "feature_guarantee": {
-          "type": "feature",
-          "settings": {
-            "icon": "guarantee",
             "text": "101-Night Guarantee"
           }
         },
-        "feature_support": {
-          "type": "feature",
+        "link_shipping": {
+          "type": "link",
           "settings": {
-            "icon": "support",
-            "text": "Dedicated Support"
+            "text": "Free Shipping"
+          }
+        },
+        "link_returns": {
+          "type": "link",
+          "settings": {
+            "text": "Free Returns"
           }
         }
       },
       "block_order": [
-        "feature_shipping",
-        "feature_guarantee",
-        "feature_support"
+        "link_guarantee",
+        "link_shipping",
+        "link_returns"
       ],
       "settings": {
         "title": "OUR COMMITMENT TO YOU",
