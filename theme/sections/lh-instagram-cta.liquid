@@ -1,84 +1,30 @@
-<section class="lh-instagram-cta" style="background-color: #E5E5DF;">
-  <div class="lh-instagram-cta__content">
-    {% if section.settings.heading %}
-      <h2 class="lh-instagram-cta__heading">{{ section.settings.heading }}</h2>
-    {% endif %}
-
-    {% if section.settings.hashtag %}
-      <div class="lh-instagram-cta__hashtag">{{ section.settings.hashtag }}</div>
-    {% endif %}
-
-    {% if section.settings.description %}
-      <p class="lh-instagram-cta__description">{{ section.settings.description }}</p>
-    {% endif %}
-
-    {% if section.settings.link_url %}
-      <a href="{{ section.settings.link_url }}" class="lh-instagram-cta__link" target="_blank" rel="noopener noreferrer">
-        {{ section.settings.link_text }} →
-      </a>
-    {% endif %}
-  </div>
-
-  <!-- Instagram Feed Carousel -->
-  <div class="lh-instagram-carousel">
-    <div class="lh-instagram-carousel__container">
-      <button class="lh-instagram-carousel__nav lh-instagram-carousel__nav--prev" aria-label="Previous images">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-      <div class="lh-instagram-carousel__track-wrapper">
-        <div class="lh-instagram-carousel__track">
-          {% for i in (1..6) %}
-            <div class="lh-instagram-carousel__item">
-              <a href="{{ section.settings.link_url | default: 'https://instagram.com/linensandhutch' }}" target="_blank" rel="noopener noreferrer" class="lh-instagram-carousel__link">
-                <img
-                  src="{{ 'instagram-' | append: i | append: '.jpg' | asset_url }}"
-                  alt="Linens & Hutch lifestyle image {{ i }}"
-                  class="lh-instagram-carousel__image"
-                  loading="lazy"
-                >
-                <div class="lh-instagram-carousel__overlay">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/>
-                    <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/>
-                    <circle cx="17.5" cy="6.5" r="1.5" fill="white"/>
-                  </svg>
-                </div>
-              </a>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-
-      <button class="lh-instagram-carousel__nav lh-instagram-carousel__nav--next" aria-label="Next images">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-</section>
-
-<style>
+{%- style -%}
   .lh-instagram-cta {
-    padding: 5rem 1rem;
+    padding: 5rem 0 4rem;
+    background: linear-gradient(90deg, #e8e1f0 0%, #f8f6fb 30%, #fcfbfd 50%, #f8f6fb 70%, #e8e1f0 100%);
+    overflow: hidden;
   }
 
   .lh-instagram-cta__content {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 3rem;
     text-align: center;
+    padding: 0 1.5rem;
   }
 
   .lh-instagram-cta__heading {
     font-size: 1.75rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
+    font-weight: 500;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
     color: #1a1a1a;
     margin: 0 0 1rem 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lh-instagram-cta__heading {
+      font-size: 1.75rem;
+    }
   }
 
   .lh-instagram-cta__hashtag {
@@ -90,85 +36,90 @@
 
   .lh-instagram-cta__description {
     font-size: 1.125rem;
-    color: #1a1a1a;
+    color: #555;
     margin: 0 0 2rem 0;
     line-height: 1.6;
+    letter-spacing: 0.08em;
   }
 
   .lh-instagram-cta__link {
     font-size: 1.125rem;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
     color: #1a1a1a;
     text-decoration: none;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.15em;
     display: inline-block;
-    transition: text-decoration 0.3s ease;
+    transition: opacity 0.3s ease;
   }
 
   .lh-instagram-cta__link:hover {
-    text-decoration: underline;
+    opacity: 0.6;
   }
 
-  @media (max-width: 768px) {
-    .lh-instagram-cta {
-      padding: 3rem 1rem;
-    }
-
-    .lh-instagram-cta__heading {
-      font-size: 1.5rem;
-    }
-
-    .lh-instagram-cta__hashtag {
-      font-size: 1.75rem;
-    }
-  }
-
-  /* Instagram Carousel Styles */
+  /* Carousel */
   .lh-instagram-carousel {
-    margin-top: 3rem;
-    padding-bottom: 5rem;
     width: 100%;
-  }
-
-  .lh-instagram-carousel__container {
-    position: relative;
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-  }
-
-  .lh-instagram-carousel__track-wrapper {
-    overflow: hidden;
-    flex: 1;
-    margin: 0 1rem;
+    padding: 1.5rem 0;
   }
 
   .lh-instagram-carousel__track {
     display: flex;
-    gap: 0.5rem;
-    transition: transform 0.4s ease;
+    width: max-content;
+    animation: lh-insta-scroll 60s linear infinite;
+  }
+
+  .lh-instagram-carousel__track:hover {
+    animation-play-state: paused;
+  }
+
+  .lh-instagram-carousel__track--manual {
+    animation: none;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes lh-insta-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
 
   .lh-instagram-carousel__item {
-    flex: 0 0 calc(16.666% - 0.42rem);
-    aspect-ratio: 1;
+    flex: 0 0 calc(100vw / 5);
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+  }
+
+  @media screen and (max-width: 749px) {
+    .lh-instagram-carousel__item {
+      flex: 0 0 50vw;
+    }
   }
 
   .lh-instagram-carousel__link {
     display: block;
     position: relative;
     width: 100%;
-    height: 100%;
     overflow: hidden;
+    border-radius: 12px;
+    aspect-ratio: 1 / 1;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .lh-instagram-carousel__link:hover {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    transform: translateY(-4px);
   }
 
   .lh-instagram-carousel__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
+  }
+
+  .lh-instagram-carousel__link:hover .lh-instagram-carousel__image {
+    transform: scale(1.05);
   }
 
   .lh-instagram-carousel__overlay {
@@ -182,133 +133,298 @@
     transition: opacity 0.3s ease;
   }
 
-  .lh-instagram-carousel__link:hover .lh-instagram-carousel__image {
-    transform: scale(1.05);
-  }
-
   .lh-instagram-carousel__link:hover .lh-instagram-carousel__overlay {
     opacity: 1;
   }
 
-  .lh-instagram-carousel__nav {
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    border: none;
+  /* Pill Controller */
+  .lh-instagram-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2rem auto 0;
+    width: fit-content;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .lh-instagram-controls .slider-button {
     background: transparent;
-    color: #1a1a1a;
+    border: none;
     cursor: pointer;
+    padding: 0.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: opacity 0.3s ease;
   }
 
-  .lh-instagram-carousel__nav:hover {
-    opacity: 0.7;
+  .lh-instagram-controls .slider-button:hover {
+    opacity: 0.6;
   }
 
-  .lh-instagram-carousel__nav:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
+  .lh-instagram-controls .slider-button svg {
+    width: 10px;
+    height: 10px;
+    opacity: 0.6;
   }
 
-  @media (max-width: 1024px) {
-    .lh-instagram-carousel__item {
-      flex: 0 0 calc(25% - 0.375rem);
-    }
+  .lh-instagram-controls .slider-button--prev svg {
+    transform: rotate(90deg);
   }
 
-  @media (max-width: 768px) {
-    .lh-instagram-carousel__item {
-      flex: 0 0 calc(33.333% - 0.33rem);
-    }
-
-    .lh-instagram-carousel__nav {
-      width: 40px;
-      height: 40px;
-    }
-
-    .lh-instagram-carousel {
-      padding-bottom: 3rem;
-    }
+  .lh-instagram-controls .slider-button--next svg {
+    transform: rotate(-90deg);
   }
 
-  @media (max-width: 480px) {
-    .lh-instagram-carousel__item {
-      flex: 0 0 calc(50% - 0.25rem);
+  .lh-instagram-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .lh-instagram-dot {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+  }
+
+  .lh-instagram-dot .dot {
+    width: 6px;
+    height: 6px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.3s ease;
+  }
+
+  .lh-instagram-dot--active .dot,
+  .lh-instagram-dot:hover .dot {
+    background: rgba(0,0,0,0.7);
+    transform: scale(1.15);
+  }
+
+  @media (max-width: 749px) {
+    .lh-instagram-cta {
+      padding: 3rem 0;
     }
 
-    .lh-instagram-carousel__track-wrapper {
-      margin: 0 0.5rem;
+    .lh-instagram-cta__heading {
+      font-size: 1.5rem;
+    }
+
+    .lh-instagram-cta__hashtag {
+      font-size: 1.75rem;
     }
   }
-</style>
+{%- endstyle -%}
+
+<section class="lh-instagram-cta">
+  <div class="lh-instagram-cta__content">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="lh-instagram-cta__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.hashtag != blank -%}
+      <div class="lh-instagram-cta__hashtag">{{ section.settings.hashtag }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.description != blank -%}
+      <p class="lh-instagram-cta__description">{{ section.settings.description }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.link_text != blank -%}
+      <a href="{{ section.settings.link_url | default: '#' }}" class="lh-instagram-cta__link" target="_blank" rel="noopener noreferrer">
+        {{ section.settings.link_text }} &rarr;
+      </a>
+    {%- endif -%}
+  </div>
+
+  <div class="lh-instagram-carousel">
+    <div class="lh-instagram-carousel__track" id="InstaTrack-{{ section.id }}">
+      {%- for iteration in (1..2) -%}
+        {%- for i in (1..6) -%}
+          <div class="lh-instagram-carousel__item">
+            <a href="{{ section.settings.link_url | default: '#' }}" target="_blank" rel="noopener noreferrer" class="lh-instagram-carousel__link">
+              <img
+                src="{{ 'instagram-' | append: i | append: '.jpg' | asset_url }}"
+                alt="Linens & Hutch lifestyle image {{ i }}"
+                class="lh-instagram-carousel__image"
+                loading="lazy"
+              >
+              <div class="lh-instagram-carousel__overlay">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/>
+                  <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/>
+                  <circle cx="17.5" cy="6.5" r="1.5" fill="white"/>
+                </svg>
+              </div>
+            </a>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="lh-instagram-controls" id="InstaControls-{{ section.id }}">
+    <button type="button" class="slider-button slider-button--prev" aria-label="Previous">
+      <span class="svg-wrapper">
+        {{- 'icon-caret.svg' | inline_asset_content -}}
+      </span>
+    </button>
+    <div class="lh-instagram-dots">
+      {%- for i in (1..6) -%}
+        <button
+          class="lh-instagram-dot{% if forloop.first %} lh-instagram-dot--active{% endif %}"
+          aria-label="Go to image {{ i }}"
+          data-index="{{ forloop.index0 }}"
+        >
+          <span class="dot"></span>
+        </button>
+      {%- endfor -%}
+    </div>
+    <button type="button" class="slider-button slider-button--next" aria-label="Next">
+      <span class="svg-wrapper">
+        {{- 'icon-caret.svg' | inline_asset_content -}}
+      </span>
+    </button>
+  </div>
+</section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const carousel = document.querySelector('.lh-instagram-carousel');
-    if (!carousel) return;
+  (function() {
+    var sectionId = '{{ section.id }}';
+    var totalItems = 6;
 
-    const track = carousel.querySelector('.lh-instagram-carousel__track');
-    const prevBtn = carousel.querySelector('.lh-instagram-carousel__nav--prev');
-    const nextBtn = carousel.querySelector('.lh-instagram-carousel__nav--next');
-    const items = carousel.querySelectorAll('.lh-instagram-carousel__item');
+    function init() {
+      var track = document.getElementById('InstaTrack-' + sectionId);
+      var controls = document.getElementById('InstaControls-' + sectionId);
+      if (!track || !controls || track.dataset.initialized) return;
+      track.dataset.initialized = 'true';
 
-    if (!track || !prevBtn || !nextBtn || items.length === 0) return;
+      var prevBtn = controls.querySelector('.slider-button--prev');
+      var nextBtn = controls.querySelector('.slider-button--next');
+      var dots = controls.querySelectorAll('.lh-instagram-dot');
+      var resumeTimer = null;
+      var currentIndex = 0;
 
-    let currentIndex = 0;
-
-    function getVisibleCount() {
-      const width = window.innerWidth;
-      if (width <= 480) return 2;
-      if (width <= 768) return 3;
-      if (width <= 1024) return 4;
-      return 6;
-    }
-
-    function getMaxIndex() {
-      const visibleCount = getVisibleCount();
-      return Math.max(0, items.length - visibleCount);
-    }
-
-    function updateCarousel() {
-      const visibleCount = getVisibleCount();
-      const itemWidth = 100 / visibleCount;
-      const gap = 0.5; // rem converted to approximate percentage
-      const offset = currentIndex * (itemWidth + gap * 0.5);
-      track.style.transform = `translateX(-${offset}%)`;
-
-      prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex >= getMaxIndex();
-    }
-
-    prevBtn.addEventListener('click', function() {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateCarousel();
+      function getItemWidth() {
+        var item = track.querySelector('.lh-instagram-carousel__item');
+        return item ? item.offsetWidth : 0;
       }
-    });
 
-    nextBtn.addEventListener('click', function() {
-      if (currentIndex < getMaxIndex()) {
-        currentIndex++;
-        updateCarousel();
+      function setActiveDot(index) {
+        dots.forEach(function(d, i) {
+          d.classList.toggle('lh-instagram-dot--active', i === index);
+        });
       }
-    });
 
-    window.addEventListener('resize', function() {
-      currentIndex = Math.min(currentIndex, getMaxIndex());
-      updateCarousel();
-    });
+      function goToItem(rawIndex) {
+        var itemW = getItemWidth();
 
-    updateCarousel();
-  });
+        if (rawIndex >= totalItems) {
+          track.style.transition = 'none';
+          track.style.transform = 'translateX(-' + (currentIndex * itemW) + 'px)';
+          track.offsetHeight;
+          currentIndex = 0;
+          var targetPx = totalItems * itemW;
+          track.classList.add('lh-instagram-carousel__track--manual');
+          track.style.transition = '';
+          track.style.transform = 'translateX(-' + targetPx + 'px)';
+          setTimeout(function() {
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0px)';
+            track.offsetHeight;
+            track.style.transition = '';
+          }, 520);
+        } else if (rawIndex < 0) {
+          track.style.transition = 'none';
+          track.style.transform = 'translateX(-' + (totalItems * itemW) + 'px)';
+          track.offsetHeight;
+          currentIndex = totalItems - 1;
+          var targetPx = currentIndex * itemW;
+          track.classList.add('lh-instagram-carousel__track--manual');
+          track.style.transition = '';
+          track.style.transform = 'translateX(-' + targetPx + 'px)';
+        } else {
+          currentIndex = rawIndex;
+          track.classList.add('lh-instagram-carousel__track--manual');
+          track.style.transform = 'translateX(-' + (currentIndex * itemW) + 'px)';
+        }
+
+        track.style.animationDelay = '';
+        setActiveDot(currentIndex);
+
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(function() {
+          var offsetPx = currentIndex * itemW;
+          var totalDistance = track.scrollWidth / 2;
+          var fraction = offsetPx / totalDistance;
+          var delay = -(fraction * 60);
+          track.style.transform = '';
+          track.style.animationDelay = delay + 's';
+          track.classList.remove('lh-instagram-carousel__track--manual');
+        }, 6000);
+      }
+
+      prevBtn.addEventListener('click', function() { goToItem(currentIndex - 1); });
+      nextBtn.addEventListener('click', function() { goToItem(currentIndex + 1); });
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          goToItem(parseInt(this.dataset.index));
+        });
+      });
+
+      var lastDotIndex = -1;
+      var allItems = track.querySelectorAll('.lh-instagram-carousel__item');
+      var pill = controls;
+      function pollPosition() {
+        if (!track.classList.contains('lh-instagram-carousel__track--manual')) {
+          var pillRight = pill.getBoundingClientRect().right;
+          var bestIdx = 0;
+          var bestDist = Infinity;
+          for (var i = 0; i < allItems.length; i++) {
+            var itemLeft = allItems[i].getBoundingClientRect().left;
+            var dist = pillRight - itemLeft;
+            if (dist >= 0 && dist < bestDist) {
+              bestDist = dist;
+              bestIdx = i % totalItems;
+            }
+          }
+          if (bestIdx !== lastDotIndex) {
+            lastDotIndex = bestIdx;
+            setActiveDot(bestIdx);
+          }
+        }
+        requestAnimationFrame(pollPosition);
+      }
+      requestAnimationFrame(pollPosition);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
 </script>
 
 {% schema %}
 {
   "name": "Instagram CTA",
+  "tag": "section",
+  "class": "section section--lh-instagram",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
   "settings": [
     {
       "type": "text",
@@ -347,8 +463,7 @@
         "heading": "STYLE FOR ALL",
         "hashtag": "#LINENSANDHUTCH",
         "description": "Get inspired and shop from their home to yours",
-        "link_text": "LINENS & HUTCH INSTAGRAM",
-        "link_url": "https://instagram.com/linensandhutch"
+        "link_text": "LINENS & HUTCH INSTAGRAM"
       }
     }
   ]
