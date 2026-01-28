@@ -1,22 +1,23 @@
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
-{%- comment -%}{{ 'component-slider.css' | asset_url | stylesheet_tag }}{%- endcomment -%}
-{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  /* Linens & Hutch Hero Styles - LARGER FONTS */
+  /* Linens & Hutch Custom Hero Carousel */
   .lh-hero {
     position: relative;
+    width: 100%;
+    overflow: hidden;
   }
 
-  .lh-hero .slideshow.banner {
+  .lh-hero__carousel {
     display: flex;
+    width: 100%;
     overflow-x: auto;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    scroll-snap-type: none !important;
+    scrollbar-width: none;
   }
 
-  .lh-hero .slideshow.banner::-webkit-scrollbar {
+  .lh-hero__carousel::-webkit-scrollbar {
     display: none;
   }
 
@@ -24,6 +25,7 @@
     position: relative;
     min-height: 450px;
     flex: 0 0 100%;
+    width: 100%;
   }
 
   @media screen and (min-width: 750px) {
@@ -248,14 +250,14 @@
   }
 {%- endstyle -%}
 
-<slideshow-component
+<div
   class="lh-hero"
   role="region"
   aria-roledescription="{{ 'sections.slideshow.carousel' | t }}"
   aria-label="{{ section.settings.accessibility_info | escape }}"
 >
   <div
-    class="slideshow banner"
+    class="lh-hero__carousel"
     id="Slider-{{ section.id }}"
     aria-live="polite"
     aria-atomic="true"
@@ -376,7 +378,7 @@
       </button>
     </div>
   {%- endif -%}
-</slideshow-component>
+</div>
 
 <script>
   (function() {
