@@ -1,9 +1,14 @@
 {%- style -%}
-  /* Linens & Hutch Benefits Bar */
+  /* Linens & Hutch Benefits Bar - Card Style */
   .lh-benefits-bar {
-    background: #2d3436;
-    color: #fff;
-    padding: 0 2rem 4rem;
+    background: #fff;
+    padding: 0 1.5rem 4rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lh-benefits-bar {
+      padding: 0 3rem 5rem;
+    }
   }
 
   .lh-benefits-bar__container {
@@ -12,55 +17,52 @@
   }
 
   .lh-benefits-bar__items {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   @media screen and (min-width: 750px) {
     .lh-benefits-bar__items {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
     }
   }
 
   .lh-benefits-bar__item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    position: relative;
+    justify-content: center;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    transition: all 0.3s ease;
   }
 
-  @media screen and (min-width: 750px) {
-    .lh-benefits-bar__item {
-      flex: 1;
-      justify-content: center;
-      text-align: center;
-    }
+  .lh-benefits-bar__item:hover {
+    border-color: #1a1a1a;
+  }
 
-    .lh-benefits-bar__item:not(:last-child)::after {
-      content: '|';
-      position: absolute;
-      right: -1rem;
-      opacity: 0.3;
-      font-weight: 300;
-    }
+  .lh-benefits-bar__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
   }
 
   .lh-benefits-bar__text {
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     margin: 0;
-    flex: 1;
+    color: #1a1a1a;
   }
 
   @media screen and (min-width: 750px) {
     .lh-benefits-bar__text {
-      font-size: 1.125rem;
+      font-size: 0.9375rem;
     }
   }
 
@@ -69,30 +71,21 @@
     text-decoration: none;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
-    transition: opacity 0.3s ease;
-  }
-
-  .lh-benefits-bar__link:hover {
-    opacity: 0.7;
+    width: 100%;
   }
 
   .lh-benefits-bar__arrow {
     display: inline-block;
-    font-size: 1.25rem;
-    font-weight: 300;
-    margin-left: 0.5rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #1a1a1a;
     transition: transform 0.3s ease;
   }
 
-  .lh-benefits-bar__link:hover .lh-benefits-bar__arrow {
+  .lh-benefits-bar__item:hover .lh-benefits-bar__arrow {
     transform: translateX(4px);
-  }
-
-  @media screen and (max-width: 749px) {
-    .lh-benefits-bar__arrow {
-      margin-left: auto;
-    }
   }
 {%- endstyle -%}
 
@@ -108,8 +101,10 @@
                 <span class="lh-benefits-bar__arrow">→</span>
               </a>
             {%- else -%}
-              <span class="lh-benefits-bar__text">{{ block.settings.text }}</span>
-              <span class="lh-benefits-bar__arrow">→</span>
+              <div class="lh-benefits-bar__content">
+                <span class="lh-benefits-bar__text">{{ block.settings.text }}</span>
+                <span class="lh-benefits-bar__arrow">→</span>
+              </div>
             {%- endif -%}
           </div>
         {%- endfor -%}

@@ -110,6 +110,12 @@
     <div class="lh-image-text__image">
       {%- if section.settings.image -%}
         {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.heading }}
+      {%- elsif section.settings.fallback_image != blank -%}
+        <img src="{{ section.settings.fallback_image | asset_url }}" alt="{{ section.settings.heading }}" loading="lazy">
+      {%- elsif section.settings.heading contains 'PILLOW' -%}
+        <img src="{{ 'promo-pillows.jpg' | asset_url }}" alt="{{ section.settings.heading }}" loading="lazy">
+      {%- elsif section.settings.heading contains 'QUILT' -%}
+        <img src="{{ 'promo-quilts.jpg' | asset_url }}" alt="{{ section.settings.heading }}" loading="lazy">
       {%- else -%}
         {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
       {%- endif -%}
@@ -146,6 +152,12 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "fallback_image",
+      "label": "Fallback image filename",
+      "info": "Asset filename to use if no image is uploaded (e.g., promo-pillows.jpg)"
     },
     {
       "type": "select",

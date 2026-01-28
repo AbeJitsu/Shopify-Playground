@@ -129,28 +129,65 @@
   </div>
 
   <div class="featured-collection__grid">
-    {% for block in section.blocks %}
-      <div class="product-card">
-        <a href="{{ block.settings.product_link }}" class="product-card__link">
-          <div class="product-card__image-container">
-            {% if block.settings.product_image %}
-              <img
-                src="{{ block.settings.product_image | image_url: width: 500 }}"
-                alt="{{ block.settings.product_title }}"
-                class="product-card__image"
-              >
-            {% else %}
-              <div class="product-card__image" style="background-color: #e0d9ce;"></div>
-            {% endif %}
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        <div class="product-card">
+          <a href="{{ block.settings.product_link }}" class="product-card__link">
+            <div class="product-card__image-container">
+              {% if block.settings.product_image %}
+                <img
+                  src="{{ block.settings.product_image | image_url: width: 500 }}"
+                  alt="{{ block.settings.product_title }}"
+                  class="product-card__image"
+                >
+              {% else %}
+                <div class="product-card__image" style="background-color: #e0d9ce;"></div>
+              {% endif %}
+            </div>
+          </a>
+          <div class="product-card__content">
+            <h3 class="product-card__title">{{ block.settings.product_title }}</h3>
+            <div class="product-card__rating">{{ block.settings.product_rating }}</div>
+            <p class="product-card__price">{{ block.settings.product_price }}</p>
           </div>
-        </a>
-        <div class="product-card__content">
-          <h3 class="product-card__title">{{ block.settings.product_title }}</h3>
-          <div class="product-card__rating">{{ block.settings.product_rating }}</div>
-          <p class="product-card__price">{{ block.settings.product_price }}</p>
         </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
+    {% else %}
+      {%- comment -%} Fallback products based on section title {%- endcomment -%}
+      {% if section.settings.title contains 'JUST IN' %}
+        {%- assign fallback_products = "Textured Cotton Comforter - Dune|product-comforter-dune.jpg|$79.99,Textured Cotton Comforter - Tan|product-comforter-tan.jpg|$79.99,Textured Cotton Comforter - Olive|product-comforter-olive.jpg|$79.99" | split: "," -%}
+      {% elsif section.settings.title contains 'BEST SELLERS' %}
+        {%- assign fallback_products = "Plush Gel-Fiber Pillow (2-Pack)|product-gel-pillow.png|$29.99,300TC Cotton Sheet Set - Gray|product-sheets-gray.jpg|$49.99,300TC Cotton Sheet Set - Ivory|product-sheets-ivory.jpg|$49.99" | split: "," -%}
+      {% elsif section.settings.title contains 'COTTON' %}
+        {%- assign fallback_products = "300TC Cotton Sheet Set - White|product-sheets-white.jpg|$49.99,300TC Cotton Sheet Set - Mauve|product-sheets-mauve.jpg|$49.99,300TC Cotton Sheet Set - Blue|product-sheets-blue.jpg|$49.99" | split: "," -%}
+      {% else %}
+        {%- assign fallback_products = "300TC Cotton Sheet Set - White|product-sheets-white.jpg|$49.99,300TC Cotton Sheet Set - Gray|product-sheets-gray.jpg|$49.99,300TC Cotton Sheet Set - Ivory|product-sheets-ivory.jpg|$49.99" | split: "," -%}
+      {% endif %}
+
+      {% for product_data in fallback_products %}
+        {%- assign parts = product_data | split: "|" -%}
+        {%- assign title = parts[0] -%}
+        {%- assign image = parts[1] -%}
+        {%- assign price = parts[2] -%}
+        <div class="product-card">
+          <a href="#" class="product-card__link">
+            <div class="product-card__image-container">
+              <img
+                src="{{ image | asset_url }}"
+                alt="{{ title }}"
+                class="product-card__image"
+                loading="lazy"
+              >
+            </div>
+          </a>
+          <div class="product-card__content">
+            <h3 class="product-card__title">{{ title }}</h3>
+            <div class="product-card__rating">★★★★★</div>
+            <p class="product-card__price">{{ price }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
   </div>
 </section>
 

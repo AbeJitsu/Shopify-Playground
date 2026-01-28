@@ -136,10 +136,6 @@
         "text": "At Linens & Hutch, our mission is to provide you with the highest quality bedding products at unbeatable prices. We back our products with a 100% money-back guarantee. If you're not completely satisfied with your purchase, our dedicated customer support team is here to ensure your satisfaction."
       }
     },
-    "lh_benefits": {
-      "type": "lh-benefits-bar",
-      "settings": {}
-    },
     "lh_new_arrivals": {
       "type": "lh-featured-collection",
       "settings": {
@@ -164,8 +160,8 @@
     "lh_promo_quilts": {
       "type": "lh-image-with-text",
       "settings": {
-        "heading": "COZY UP WITH QUALITY QUILTS",
-        "text": "Timeless comfort meets timeless style—discover our collection of beautifully crafted quilts for every bedroom.",
+        "heading": "QUILTED COVERLET SETS IN CALMING TONES",
+        "text": "Indulge in soft, high-quality quilts designed for year-round coziness.",
         "button_label": "SHOP NOW",
         "image_position": "left"
       }
@@ -185,7 +181,6 @@
     "lh_hero",
     "lh_categories",
     "lh_commitment",
-    "lh_benefits",
     "lh_new_arrivals",
     "lh_promo_pillows",
     "lh_best_sellers",
