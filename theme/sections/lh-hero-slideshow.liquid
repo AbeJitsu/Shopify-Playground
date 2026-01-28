@@ -56,7 +56,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 50%;
+    object-position: var(--image-position, 50% 50%) !important;
   }
 
   .lh-hero__content {
@@ -83,6 +83,13 @@
 
   .lh-hero__text {
     max-width: 550px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
   }
 
   .lh-hero__content--right {
@@ -106,9 +113,9 @@
   }
 
   .lh-hero__heading {
-    font-size: 1.75rem;
+    font-size: 2rem;
     font-weight: 300;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     margin: 0 0 0.75rem;
     color: #1a1a1a;
@@ -118,19 +125,19 @@
 
   @media screen and (min-width: 750px) {
     .lh-hero__heading {
-      font-size: 2.5rem;
+      font-size: 3rem;
     }
   }
 
   @media screen and (min-width: 990px) {
     .lh-hero__heading {
-      font-size: 3rem;
+      font-size: 3.5rem;
     }
   }
 
   .lh-hero__subheading {
-    font-size: 1rem;
-    letter-spacing: 0.1em;
+    font-size: 1.125rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #555;
     margin: 0 0 1.5rem;
@@ -140,7 +147,7 @@
 
   @media screen and (min-width: 750px) {
     .lh-hero__subheading {
-      font-size: 1.25rem;
+      font-size: 1.375rem;
     }
   }
 
@@ -152,8 +159,8 @@
     color: #fff;
     padding: 1.25rem 2.75rem;
     text-decoration: none;
-    font-size: 1rem;
-    letter-spacing: 0.2em;
+    font-size: 1.0625rem;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: 500;
@@ -162,7 +169,7 @@
 
   @media screen and (min-width: 750px) {
     .lh-hero__button {
-      font-size: 1.0625rem;
+      font-size: 1.125rem;
       padding: 1.5rem 3rem;
     }
   }
@@ -277,7 +284,7 @@
         aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
         tabindex="-1"
       >
-        <div class="lh-hero__media">
+        <div class="lh-hero__media" style="--image-position: {{ block.settings.image_position | default: '50% 50%' }}">
           {%- if block.settings.image -%}
             {%- liquid
               assign height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round
@@ -303,11 +310,11 @@
           {%- else -%}
             {%- case forloop.index -%}
               {%- when 1 -%}
-                <img src="{{ 'hero-silk-pillowcases.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+                <img src="{{ 'hero-silk-pillowcases.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy" style="object-position: 85% 50%">
               {%- when 2 -%}
                 <img src="{{ 'hero-bamboo-sheets.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
               {%- when 3 -%}
-                <img src="{{ 'hero-cotton-luxury.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+                <img src="{{ 'hero-cotton-luxury.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy" style="object-position: 30% 50%">
               {%- when 4 -%}
                 <img src="{{ 'hero-texture.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
               {%- when 5 -%}
@@ -569,6 +576,19 @@
             { "value": "right", "label": "Right" }
           ],
           "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image position",
+          "options": [
+            { "value": "15% 50%", "label": "Far left" },
+            { "value": "30% 50%", "label": "Left" },
+            { "value": "50% 50%", "label": "Center" },
+            { "value": "70% 50%", "label": "Right" },
+            { "value": "85% 50%", "label": "Far right" }
+          ],
+          "default": "50% 50%"
         }
       ]
     }

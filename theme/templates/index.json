@@ -9,7 +9,8 @@
             "heading": "SILK PILLOWCASES",
             "subheading": "LUXURIOUSLY SMOOTH FOR EFFORTLESS BEAUTY REST",
             "button_label": "SHOP NOW",
-            "text_position": "left"
+            "text_position": "left",
+            "image_position": "85% 50%"
           }
         },
         "slide_bamboo": {
@@ -25,16 +26,17 @@
           "type": "slide",
           "settings": {
             "heading": "BRING HOME COTTON LUXURY",
-            "subheading": "",
+            "subheading": "TIMELESS COMFORT IN EVERY THREAD",
             "button_label": "SHOP THE COLLECTION",
-            "text_position": "right"
+            "text_position": "right",
+            "image_position": "30% 50%"
           }
         },
         "slide_texture": {
           "type": "slide",
           "settings": {
             "heading": "LAYER YOUR BED IN TEXTURE",
-            "subheading": "",
+            "subheading": "QUILTS, COVERLETS, AND COZY LAYERS",
             "button_label": "SHOP THE COLLECTION",
             "text_position": "left"
           }
