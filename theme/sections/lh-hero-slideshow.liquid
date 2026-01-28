@@ -11,10 +11,11 @@
   .lh-hero__carousel {
     display: flex;
     width: 100%;
-    overflow-x: auto;
+    overflow: hidden;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    scroll-snap-type: x mandatory;
   }
 
   .lh-hero__carousel::-webkit-scrollbar {
@@ -26,6 +27,7 @@
     min-height: 450px;
     flex: 0 0 100%;
     width: 100%;
+    scroll-snap-align: start;
   }
 
   @media screen and (min-width: 750px) {
@@ -181,21 +183,19 @@
 
   /* Slider controls - glassmorphism effect */
   .lh-hero .slideshow__controls {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    margin: 1rem auto;
+    width: fit-content;
     padding: 0.4rem 0.8rem;
     border-radius: 50px;
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
   }
 
   .lh-hero .slider-button {
@@ -391,10 +391,34 @@
 
     if (!slider) return;
 
-    const slides = slider.querySelectorAll('.lh-hero__slide');
+    const slides = Array.from(slider.querySelectorAll('.lh-hero__slide'));
     const totalSlides = slides.length;
-    const slideWidth = slides[0].offsetWidth;
+    let slideWidth = slides[0].offsetWidth;
     let currentSlide = 0;
+    let isTransitioning = false;
+    let pendingSnap = null;
+
+    // Clone first and last slides for seamless looping
+    const firstClone = slides[0].cloneNode(true);
+    const lastClone = slides[totalSlides - 1].cloneNode(true);
+    firstClone.id = firstClone.id + '-clone';
+    lastClone.id = lastClone.id + '-clone';
+    slider.appendChild(firstClone);
+    slider.insertBefore(lastClone, slides[0]);
+
+    // Start at slide 1 (index 0) which is now offset by the prepended clone
+    slider.scrollTo({ left: slideWidth, behavior: 'instant' });
+
+    // Use scrollend to snap clones back to real slides — perfectly timed
+    slider.addEventListener('scrollend', function() {
+      if (pendingSnap !== null) {
+        currentSlide = pendingSnap;
+        slider.scrollTo({ left: (currentSlide + 1) * slideWidth, behavior: 'instant' });
+        pendingSnap = null;
+        updateDots();
+      }
+      isTransitioning = false;
+    });
 
     function updateDots() {
       dots.forEach((dot, i) => {
@@ -403,18 +427,45 @@
     }
 
     function goToSlide(index) {
-      currentSlide = ((index % totalSlides) + totalSlides) % totalSlides;
-      slider.scrollTo({ left: currentSlide * slideWidth, behavior: 'smooth' });
+      if (isTransitioning) return;
+      currentSlide = index;
+      slider.scrollTo({ left: (currentSlide + 1) * slideWidth, behavior: 'smooth' });
       updateDots();
     }
 
     function nextSlide() {
-      goToSlide(currentSlide + 1);
+      if (isTransitioning) return;
+      isTransitioning = true;
+      currentSlide++;
+      slider.scrollTo({ left: (currentSlide + 1) * slideWidth, behavior: 'smooth' });
+
+      if (currentSlide >= totalSlides) {
+        pendingSnap = 0;
+        updateDots();
+      } else {
+        updateDots();
+      }
     }
 
     function prevSlide() {
-      goToSlide(currentSlide - 1);
+      if (isTransitioning) return;
+      isTransitioning = true;
+      currentSlide--;
+      slider.scrollTo({ left: (currentSlide + 1) * slideWidth, behavior: 'smooth' });
+
+      if (currentSlide < 0) {
+        pendingSnap = totalSlides - 1;
+        updateDots();
+      } else {
+        updateDots();
+      }
     }
+
+    // Recalculate on resize
+    window.addEventListener('resize', function() {
+      slideWidth = slides[0].offsetWidth;
+      slider.scrollTo({ left: (currentSlide + 1) * slideWidth, behavior: 'instant' });
+    });
 
     let autoplayInterval;
     if (autoplay) {
