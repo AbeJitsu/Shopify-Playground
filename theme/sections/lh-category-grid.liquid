@@ -5,6 +5,7 @@
   .lh-categories {
     padding: 5rem 1.5rem 4rem;
     background: #fff;
+    overflow: hidden;
   }
 
   @media screen and (min-width: 750px) {
@@ -52,16 +53,26 @@
     }
   }
 
-  .lh-categories__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+  .lh-categories__slider-wrapper {
+    overflow: hidden;
   }
 
-  @media screen and (min-width: 750px) {
-    .lh-categories__grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
+  .lh-categories__track {
+    display: flex;
+    width: max-content;
+    animation: lh-category-scroll 60s linear infinite;
+  }
+
+  .lh-categories__track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes lh-category-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
     }
   }
 
@@ -69,12 +80,21 @@
     text-decoration: none;
     display: block;
     position: relative;
+    flex: 0 0 300px;
+    padding: 0 0.75rem;
+    box-sizing: border-box;
+  }
+
+  @media screen and (max-width: 749px) {
+    .lh-category-card {
+      flex: 0 0 200px;
+    }
   }
 
   .lh-category-card__image-wrapper {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
     background: #f5f5f5;
   }
 
@@ -132,50 +152,53 @@
     </div>
 
     <div class="lh-categories__slider-wrapper">
-      <div class="lh-categories__grid" id="CategoryGrid-{{ section.id }}">
-        {%- for block in section.blocks -%}
-          <a
-            href="{{ block.settings.link | default: '#' }}"
-            class="lh-category-card"
-            {{ block.shopify_attributes }}
-          >
-            <div class="lh-category-card__image-wrapper">
-              {%- if block.settings.image != blank -%}
-                {{
-                  block.settings.image
-                  | image_url: width: 800
-                  | image_tag:
-                    loading: 'lazy',
-                    sizes: '(min-width: 750px) 25vw, 50vw',
-                    widths: '200, 300, 400, 500, 600, 800'
-                }}
-              {%- else -%}
-                {%- case forloop.index -%}
-                  {%- when 1 -%}
-                    <img src="{{ 'category-sheets.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
-                  {%- when 2 -%}
-                    <img src="{{ 'category-comforters.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
-                  {%- when 3 -%}
-                    <img src="{{ 'category-duvet.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
-                  {%- when 4 -%}
-                    <img src="{{ 'category-quilts.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
-                  {%- when 5 -%}
-                    <img src="{{ 'category-bedding-essentials.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
-                  {%- when 6 -%}
-                    <img src="{{ 'category-throw-pillows.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
-                  {%- when 7 -%}
-                    <img src="{{ 'category-blankets.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
-                  {%- when 8 -%}
-                    <img src="{{ 'category-towels.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
-                  {%- else -%}
-                    <img src="{{ 'category-bath.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
-                {%- endcase -%}
-              {%- endif -%}
-            </div>
-            <h3 class="lh-category-card__title">
-              {{ block.settings.title | default: 'Category' }} <span class="arrow">&rarr;</span>
-            </h3>
-          </a>
+      <div class="lh-categories__track" id="CategoryGrid-{{ section.id }}">
+        {%- comment -%}Render blocks twice for seamless loop{%- endcomment -%}
+        {%- for iteration in (1..2) -%}
+          {%- for block in section.blocks -%}
+            <a
+              href="{{ block.settings.link | default: '#' }}"
+              class="lh-category-card"
+              {% if iteration == 1 %}{{ block.shopify_attributes }}{% endif %}
+            >
+              <div class="lh-category-card__image-wrapper">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 800
+                    | image_tag:
+                      loading: 'lazy',
+                      sizes: '(min-width: 750px) 25vw, 50vw',
+                      widths: '200, 300, 400, 500, 600, 800'
+                  }}
+                {%- else -%}
+                  {%- case forloop.index -%}
+                    {%- when 1 -%}
+                      <img src="{{ 'category-sheets.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                    {%- when 2 -%}
+                      <img src="{{ 'category-comforters.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                    {%- when 3 -%}
+                      <img src="{{ 'category-duvet.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                    {%- when 4 -%}
+                      <img src="{{ 'category-quilts.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                    {%- when 5 -%}
+                      <img src="{{ 'category-bedding-essentials.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                    {%- when 6 -%}
+                      <img src="{{ 'category-throw-pillows.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                    {%- when 7 -%}
+                      <img src="{{ 'category-blankets.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                    {%- when 8 -%}
+                      <img src="{{ 'category-towels.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                    {%- else -%}
+                      <img src="{{ 'category-bath.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                  {%- endcase -%}
+                {%- endif -%}
+              </div>
+              <h3 class="lh-category-card__title">
+                {{ block.settings.title | default: 'Category' }} <span class="arrow">&rarr;</span>
+              </h3>
+            </a>
+          {%- endfor -%}
         {%- endfor -%}
       </div>
     </div>
