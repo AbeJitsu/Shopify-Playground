@@ -154,11 +154,11 @@
   }
 
   .lh-categories__controls .slider-button--prev svg {
-    transform: rotate(90deg);
+    transform: rotate(180deg);
   }
 
   .lh-categories__controls .slider-button--next svg {
-    transform: rotate(-90deg);
+    transform: rotate(0deg);
   }
 {%- endstyle -%}
 
@@ -201,6 +201,14 @@
                     <img src="{{ 'category-duvet.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
                   {%- when 4 -%}
                     <img src="{{ 'category-quilts.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                  {%- when 5 -%}
+                    <img src="{{ 'category-bedding-essentials.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                  {%- when 6 -%}
+                    <img src="{{ 'category-throw-pillows.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                  {%- when 7 -%}
+                    <img src="{{ 'category-blankets.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                  {%- when 8 -%}
+                    <img src="{{ 'category-towels.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
                   {%- else -%}
                     <img src="{{ 'category-bath.jpg' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
                 {%- endcase -%}

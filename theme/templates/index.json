@@ -88,13 +88,41 @@
           "settings": {
             "title": "QUILTS"
           }
+        },
+        "cat_bedding": {
+          "type": "category",
+          "settings": {
+            "title": "BEDDING ESSENTIALS"
+          }
+        },
+        "cat_throw_pillows": {
+          "type": "category",
+          "settings": {
+            "title": "THROW PILLOWS"
+          }
+        },
+        "cat_blankets": {
+          "type": "category",
+          "settings": {
+            "title": "THROW BLANKETS"
+          }
+        },
+        "cat_towels": {
+          "type": "category",
+          "settings": {
+            "title": "TOWELS"
+          }
         }
       },
       "block_order": [
         "cat_sheets",
         "cat_comforters",
         "cat_duvet",
-        "cat_quilts"
+        "cat_quilts",
+        "cat_bedding",
+        "cat_throw_pillows",
+        "cat_blankets",
+        "cat_towels"
       ],
       "settings": {
         "title": "SHOP BY CATEGORY",
