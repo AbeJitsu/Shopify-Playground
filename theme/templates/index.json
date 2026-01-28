@@ -80,7 +80,8 @@
         "cat_duvet": {
           "type": "category",
           "settings": {
-            "title": "DUVET COVERS"
+            "title": "DUVET COVERS",
+            "image": "https://www.linensandhutch.com/cdn/shop/files/1KLH-DUVET-WHITE-C2A_cb7379ee-0471-4d14-9de6-46319d487f02.png?v=1720794103&width=535"
           }
         },
         "cat_quilts": {
