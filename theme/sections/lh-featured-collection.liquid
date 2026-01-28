@@ -405,6 +405,7 @@
                   <span>{{ p_reviews }}</span>
                 </div>
                 <p class="lh-fc__price">{{ p_price }}</p>
+                {%- unless p_img_prefix == 'just-in-4' -%}
                 <div class="lh-fc__swatches">
                   {%- for color in p_colors -%}
                     <button
@@ -416,6 +417,7 @@
                     </button>
                   {%- endfor -%}
                 </div>
+                {%- endunless -%}
               </div>
             {%- endfor -%}
           {% endif %}
@@ -516,6 +518,32 @@
           goToCard(parseInt(this.dataset.index));
         });
       });
+
+      /* Poll animation position to update dots during auto-scroll */
+      var lastDotIndex = -1;
+      var pill = controls;
+      var cards = track.querySelectorAll('.lh-fc__card');
+      function pollPosition() {
+        if (!track.classList.contains('lh-fc__track--manual')) {
+          var pillRight = pill.getBoundingClientRect().right;
+          var bestIdx = 0;
+          var bestDist = Infinity;
+          for (var i = 0; i < totalCards; i++) {
+            var cardLeft = cards[i].getBoundingClientRect().left;
+            var dist = pillRight - cardLeft;
+            if (dist >= 0 && dist < bestDist) {
+              bestDist = dist;
+              bestIdx = i;
+            }
+          }
+          if (bestIdx !== lastDotIndex) {
+            lastDotIndex = bestIdx;
+            setActiveDot(bestIdx);
+          }
+        }
+        requestAnimationFrame(pollPosition);
+      }
+      requestAnimationFrame(pollPosition);
 
       /* Color swatch image swapping */
       if (section) {
