@@ -11,9 +11,9 @@
   .lh-hero .slideshow.banner {
     display: flex;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    scroll-snap-type: none !important;
   }
 
   .lh-hero .slideshow.banner::-webkit-scrollbar {
@@ -24,7 +24,7 @@
     position: relative;
     min-height: 450px;
     flex: 0 0 100%;
-    scroll-snap-align: start;
+    scroll-snap-align: none !important;
   }
 
   @media screen and (min-width: 750px) {
@@ -336,6 +336,74 @@
         </div>
       </div>
     {%- endfor -%}
+
+    {%- for block in section.blocks -%}
+      <div
+        class="lh-hero__slide slideshow__slide grid__item grid--1-col slider__slide"
+        id="Slide-{{ section.id }}-{{ forloop.index }}-clone"
+        role="group"
+        aria-roledescription="{{ 'sections.slideshow.slide' | t }}"
+        aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+        tabindex="-1"
+      >
+        <div class="lh-hero__media">
+          {%- if block.settings.image -%}
+            {%- liquid
+              assign height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round
+              assign sizes = '100vw'
+              assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+            -%}
+            {{
+              block.settings.image
+              | image_url: width: 3840
+              | image_tag:
+                loading: 'lazy',
+                height: height,
+                sizes: sizes,
+                widths: widths
+            }}
+          {%- elsif block.settings.asset_image != blank -%}
+            <img src="{{ block.settings.asset_image | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+          {%- else -%}
+            {%- case forloop.index -%}
+              {%- when 1 -%}
+                <img src="{{ 'hero-silk-pillowcases.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+              {%- when 2 -%}
+                <img src="{{ 'hero-bamboo-sheets.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+              {%- when 3 -%}
+                <img src="{{ 'hero-cotton-luxury.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+              {%- when 4 -%}
+                <img src="{{ 'hero-texture.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+              {%- when 5 -%}
+                <img src="{{ 'hero-towels.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
+              {%- else -%}
+                {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endcase -%}
+          {%- endif -%}
+        </div>
+
+        <div class="lh-hero__content page-width{% if block.settings.text_position == 'right' %} lh-hero__content--right{% endif %}">
+          <div class="lh-hero__text">
+            {%- if block.settings.heading != blank -%}
+              <h2 class="lh-hero__heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+
+            {%- if block.settings.subheading != blank -%}
+              <p class="lh-hero__subheading">{{ block.settings.subheading }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.button_label != blank -%}
+              <a
+                href="{{ block.settings.link | default: '#' }}"
+                class="lh-hero__button"
+              >
+                {{ block.settings.button_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
   </div>
 
   {%- if section.blocks.size > 1 -%}
@@ -388,44 +456,60 @@
     const prevBtn = document.querySelector('.lh-hero .slider-button--prev');
     const nextBtn = document.querySelector('.lh-hero .slider-button--next');
 
-    if (!slider || !autoplay) return;
+    if (!slider) return;
 
-    let currentSlide = 0;
     const slides = slider.querySelectorAll('.lh-hero__slide');
-    const totalSlides = slides.length;
+    const totalSlides = slides.length / 2; // 5 (clones are duplicates)
+    const slideWidth = slides[0].offsetWidth;
 
-    function goToSlide(index) {
-      currentSlide = index;
-      if (currentSlide >= totalSlides) currentSlide = 0;
-      if (currentSlide < 0) currentSlide = totalSlides - 1;
+    function getDotIndex() {
+      const pos = Math.round(slider.scrollLeft / slideWidth);
+      return pos % totalSlides;
+    }
 
-      const slideWidth = slides[0].offsetWidth;
-      slider.scrollTo({ left: slideWidth * currentSlide, behavior: 'smooth' });
-
+    function updateDots() {
+      const current = getDotIndex();
       dots.forEach((dot, i) => {
-        dot.classList.toggle('slider-counter__link--active', i === currentSlide);
+        dot.classList.toggle('slider-counter__link--active', i === current);
       });
     }
 
-    function nextSlide() {
-      goToSlide(currentSlide + 1);
+    function goToSlide(index) {
+      slider.scrollTo({ left: index * slideWidth, behavior: 'smooth' });
     }
 
-    let autoplayInterval = setInterval(nextSlide, speed);
+    function nextSlide() {
+      const current = Math.round(slider.scrollLeft / slideWidth);
+      goToSlide(current + 1);
+    }
 
-    // Pause on hover
-    slider.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
-    slider.addEventListener('mouseleave', () => {
-      autoplayInterval = setInterval(nextSlide, speed);
+    function prevSlide() {
+      const current = Math.round(slider.scrollLeft / slideWidth);
+      goToSlide(current - 1);
+    }
+
+    // Update dots on scroll
+    slider.addEventListener('scroll', () => {
+      updateDots();
     });
 
-    // Manual controls
+    let autoplayInterval;
+    if (autoplay) {
+      autoplayInterval = setInterval(nextSlide, speed);
+      slider.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+      slider.addEventListener('mouseleave', () => {
+        autoplayInterval = setInterval(nextSlide, speed);
+      });
+    }
+
     dots.forEach((dot, i) => {
       dot.addEventListener('click', () => goToSlide(i));
     });
 
-    if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
-    if (nextBtn) nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+    updateDots();
   })();
 </script>
 
