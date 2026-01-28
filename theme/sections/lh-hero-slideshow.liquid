@@ -1,5 +1,5 @@
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
-{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{%- comment -%}{{ 'component-slider.css' | asset_url | stylesheet_tag }}{%- endcomment -%}
 {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
@@ -336,74 +336,6 @@
         </div>
       </div>
     {%- endfor -%}
-
-    {%- for block in section.blocks -%}
-      <div
-        class="lh-hero__slide slideshow__slide grid__item grid--1-col slider__slide"
-        id="Slide-{{ section.id }}-{{ forloop.index }}-clone"
-        role="group"
-        aria-roledescription="{{ 'sections.slideshow.slide' | t }}"
-        aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
-        tabindex="-1"
-      >
-        <div class="lh-hero__media">
-          {%- if block.settings.image -%}
-            {%- liquid
-              assign height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round
-              assign sizes = '100vw'
-              assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
-            -%}
-            {{
-              block.settings.image
-              | image_url: width: 3840
-              | image_tag:
-                loading: 'lazy',
-                height: height,
-                sizes: sizes,
-                widths: widths
-            }}
-          {%- elsif block.settings.asset_image != blank -%}
-            <img src="{{ block.settings.asset_image | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
-          {%- else -%}
-            {%- case forloop.index -%}
-              {%- when 1 -%}
-                <img src="{{ 'hero-silk-pillowcases.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
-              {%- when 2 -%}
-                <img src="{{ 'hero-bamboo-sheets.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
-              {%- when 3 -%}
-                <img src="{{ 'hero-cotton-luxury.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
-              {%- when 4 -%}
-                <img src="{{ 'hero-texture.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
-              {%- when 5 -%}
-                <img src="{{ 'hero-towels.jpg' | asset_url }}" alt="{{ block.settings.heading }}" loading="lazy">
-              {%- else -%}
-                {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
-            {%- endcase -%}
-          {%- endif -%}
-        </div>
-
-        <div class="lh-hero__content page-width{% if block.settings.text_position == 'right' %} lh-hero__content--right{% endif %}">
-          <div class="lh-hero__text">
-            {%- if block.settings.heading != blank -%}
-              <h2 class="lh-hero__heading">{{ block.settings.heading }}</h2>
-            {%- endif -%}
-
-            {%- if block.settings.subheading != blank -%}
-              <p class="lh-hero__subheading">{{ block.settings.subheading }}</p>
-            {%- endif -%}
-
-            {%- if block.settings.button_label != blank -%}
-              <a
-                href="{{ block.settings.link | default: '#' }}"
-                class="lh-hero__button"
-              >
-                {{ block.settings.button_label }}
-              </a>
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    {%- endfor -%}
   </div>
 
   {%- if section.blocks.size > 1 -%}
@@ -459,39 +391,29 @@
     if (!slider) return;
 
     const slides = slider.querySelectorAll('.lh-hero__slide');
-    const totalSlides = slides.length / 2; // 5 (clones are duplicates)
+    const totalSlides = slides.length;
     const slideWidth = slides[0].offsetWidth;
-
-    function getDotIndex() {
-      const pos = Math.round(slider.scrollLeft / slideWidth);
-      return pos % totalSlides;
-    }
+    let currentSlide = 0;
 
     function updateDots() {
-      const current = getDotIndex();
       dots.forEach((dot, i) => {
-        dot.classList.toggle('slider-counter__link--active', i === current);
+        dot.classList.toggle('slider-counter__link--active', i === currentSlide);
       });
     }
 
     function goToSlide(index) {
-      slider.scrollTo({ left: index * slideWidth, behavior: 'smooth' });
+      currentSlide = ((index % totalSlides) + totalSlides) % totalSlides;
+      slider.scrollTo({ left: currentSlide * slideWidth, behavior: 'smooth' });
+      updateDots();
     }
 
     function nextSlide() {
-      const current = Math.round(slider.scrollLeft / slideWidth);
-      goToSlide(current + 1);
+      goToSlide(currentSlide + 1);
     }
 
     function prevSlide() {
-      const current = Math.round(slider.scrollLeft / slideWidth);
-      goToSlide(current - 1);
+      goToSlide(currentSlide - 1);
     }
-
-    // Update dots on scroll
-    slider.addEventListener('scroll', () => {
-      updateDots();
-    });
 
     let autoplayInterval;
     if (autoplay) {
