@@ -1,6 +1,10 @@
 <style>
   {%- comment -%}
-  LINENS & HUTCH HEADER - PORTFOLIO QUALITY
+  LINENS & HUTCH HEADER - 2-ROW LAYOUT
+
+  LAYOUT:
+  Row 1: Search | Logo (centered) | Account/Cart
+  Row 2: Navigation (BEDDING | PILLOWS & THROWS | BATH & DECOR | NEW ARRIVALS | BEST SELLERS)
 
   IMPROVEMENTS OVER ORIGINAL:
   - Clean semantic HTML structure
@@ -16,8 +20,6 @@
     --header-bg: #ffffff;
     --header-text: #121212;
     --header-border: #e0e0e0;
-    --announcement-bg: #2a2a2a;
-    --announcement-text: #ffffff;
     --megamenu-bg: #ffffff;
     --megamenu-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     --transition-speed: 200ms;
@@ -32,32 +34,28 @@
     z-index: 100;
   }
 
-  .header__inner {
+  {%- comment -%}ROW 1: LOGO ROW{%- endcomment -%}
+  .header__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 1rem 2rem;
     max-width: 1400px;
     margin: 0 auto;
+    border-bottom: 1px solid var(--header-border);
   }
 
   {%- comment -%}LOGO{%- endcomment -%}
   .header__logo {
-    flex: 0 0 auto;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--header-text);
-    text-decoration: none;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 0;
-    font-family: Georgia, serif;
-    font-style: italic;
+    text-decoration: none;
   }
 
   .header__logo img {
-    max-height: 50px;
+    max-height: 60px;
     width: auto;
   }
 
@@ -73,119 +71,7 @@
     justify-content: center;
     color: var(--header-text);
     font-size: 1.25rem;
-  }
-
-  {%- comment -%}NAVIGATION{%- endcomment -%}
-  .header__nav {
-    flex: 1;
-    display: none;
-    justify-content: center;
-    align-items: center;
-  }
-
-  @media (min-width: 750px) {
-    .header__nav {
-      display: flex;
-    }
-  }
-
-  .nav-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-  }
-
-  .nav-item {
-    position: relative;
-  }
-
-  .nav-link {
-    color: var(--header-text);
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 0.5rem 0;
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    transition: color var(--transition-speed) ease;
-  }
-
-  .nav-link:hover {
-    color: #666;
-  }
-
-  {%- comment -%}DROPDOWN TOGGLE ICON{%- endcomment -%}
-  .nav-toggle {
-    width: 0.75rem;
-    height: 0.75rem;
-    display: inline-block;
-    margin-left: 0.25rem;
-  }
-
-  {%- comment -%}MEGA MENU - DESKTOP HOVER{%- endcomment -%}
-  .nav-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: var(--megamenu-bg);
-    box-shadow: var(--megamenu-shadow);
-    border-radius: 0.25rem;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity var(--transition-speed) ease,
-                visibility var(--transition-speed) ease;
-    padding: 1.5rem;
-    min-width: 300px;
-    margin-top: 0.5rem;
-  }
-
-  @media (min-width: 750px) {
-    .nav-item:hover .nav-dropdown {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
-  }
-
-  .nav-dropdown-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .dropdown-column {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .dropdown-title {
-    font-weight: 600;
-    font-size: 0.875rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--header-text);
-    margin: 0;
-    padding: 0;
-  }
-
-  .dropdown-link {
-    color: var(--header-text);
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: color var(--transition-speed) ease;
-  }
-
-  .dropdown-link:hover {
-    color: #666;
+    margin-right: auto;
   }
 
   {%- comment -%}ACCOUNT & CART{%- endcomment -%}
@@ -193,7 +79,8 @@
     flex: 0 0 auto;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
+    margin-left: auto;
   }
 
   .header__action-btn {
@@ -210,6 +97,120 @@
   }
 
   .header__action-btn:hover {
+    color: #666;
+  }
+
+  {%- comment -%}ROW 2: NAVIGATION ROW{%- endcomment -%}
+  .header__bottom {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 750px) {
+    .header__bottom {
+      display: flex;
+    }
+  }
+
+  .nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-link {
+    color: var(--header-text);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 1rem 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color var(--transition-speed) ease;
+  }
+
+  .nav-link:hover {
+    color: #666;
+  }
+
+  {%- comment -%}DROPDOWN TOGGLE ICON{%- endcomment -%}
+  .nav-toggle {
+    width: 0.6rem;
+    height: 0.6rem;
+    display: inline-block;
+  }
+
+  {%- comment -%}MEGA MENU - DESKTOP HOVER{%- endcomment -%}
+  .nav-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--megamenu-bg);
+    box-shadow: var(--megamenu-shadow);
+    border-radius: 0.25rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--transition-speed) ease,
+                visibility var(--transition-speed) ease;
+    padding: 1.5rem;
+    min-width: 350px;
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 750px) {
+    .nav-item:hover .nav-dropdown {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+  }
+
+  .nav-dropdown-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .dropdown-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .dropdown-title {
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--header-text);
+    margin: 0;
+    padding: 0;
+  }
+
+  .dropdown-link {
+    color: var(--header-text);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color var(--transition-speed) ease;
+  }
+
+  .dropdown-link:hover {
     color: #666;
   }
 
@@ -254,7 +255,7 @@
     }
   }
 
-  {%- comment -%}MOBILE MENU - HIDDEN BY DEFAULT{%- endcomment -%}
+  {%- comment -%}MOBILE MENU{%- endcomment -%}
   .mobile-menu {
     position: fixed;
     top: 0;
@@ -319,7 +320,6 @@
     transform: rotate(180deg);
   }
 
-  {%- comment -%}MOBILE DROPDOWN - HIDDEN BY DEFAULT{%- endcomment -%}
   .mobile-dropdown {
     max-height: 0;
     overflow: hidden;
@@ -351,30 +351,33 @@
 
   {%- comment -%}RESPONSIVE ADJUSTMENTS{%- endcomment -%}
   @media (max-width: 749px) {
-    .header__inner {
-      padding: 0.75rem;
+    .header__top {
+      padding: 0.75rem 1rem;
+      border-bottom: none;
     }
 
-    .header__logo {
-      font-size: 1.25rem;
+    .header__bottom {
+      display: none !important;
+    }
+
+    .header__logo img {
+      max-height: 45px;
     }
 
     .nav-list {
       gap: 1rem;
     }
 
-    .nav-link {
-      font-size: 0.85rem;
-    }
-
     .header__actions {
-      gap: 0.5rem;
+      gap: 1rem;
+      margin-left: 0.5rem;
     }
   }
 </style>
 
 <header class="header">
-  <div class="header__inner">
+  {%- comment -%}ROW 1: LOGO, SEARCH, ACCOUNT, CART{%- endcomment -%}
+  <div class="header__top">
     <button class="header__search" aria-label="Search" type="button">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="11" cy="11" r="8"></circle>
@@ -385,115 +388,6 @@
     <a href="/" class="header__logo">
       <img src="{{ 'logo-linens-hutch.avif' | asset_url }}" alt="Linens & Hutch" />
     </a>
-
-    <nav class="header__nav">
-      <ul class="nav-list">
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            BEDDING
-            <svg class="nav-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </a>
-          <div class="nav-dropdown">
-            <div class="nav-dropdown-content">
-              <div class="dropdown-column">
-                <h3 class="dropdown-title">Sheets</h3>
-                <a href="#" class="dropdown-link">All Sheets</a>
-                <a href="#" class="dropdown-link">NEW! Holiday Sheets</a>
-                <a href="#" class="dropdown-link">Solid Sheets</a>
-                <a href="#" class="dropdown-link">Patterned Sheets</a>
-                <a href="#" class="dropdown-link">Linen & Rayon Bamboo</a>
-                <a href="#" class="dropdown-link">Cotton Sheets</a>
-                <a href="#" class="dropdown-link">Flannel Sheets</a>
-                <a href="#" class="dropdown-link">Embossed Sheets</a>
-              </div>
-              <div class="dropdown-column">
-                <h3 class="dropdown-title">Comforters</h3>
-                <a href="#" class="dropdown-link">All Comforters</a>
-                <a href="#" class="dropdown-link">NEW! Textured</a>
-                <a href="#" class="dropdown-link">Solid Comforters</a>
-                <a href="#" class="dropdown-link">Patterned</a>
-                <a href="#" class="dropdown-link">Reversible</a>
-              </div>
-              <div class="dropdown-column">
-                <h3 class="dropdown-title">Duvets & More</h3>
-                <a href="#" class="dropdown-link">All Duvet Covers</a>
-                <a href="#" class="dropdown-link">Solid Duvet Covers</a>
-                <a href="#" class="dropdown-link">Patterned Covers</a>
-                <a href="#" class="dropdown-link">Quilts</a>
-                <a href="#" class="dropdown-link">Pillowcases</a>
-              </div>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            PILLOWS & THROWS
-            <svg class="nav-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </a>
-          <div class="nav-dropdown">
-            <div class="nav-dropdown-content">
-              <div class="dropdown-column">
-                <h3 class="dropdown-title">Pillows</h3>
-                <a href="#" class="dropdown-link">All Pillows</a>
-                <a href="#" class="dropdown-link">Throw Pillows</a>
-                <a href="#" class="dropdown-link">Plush Gel-Fiber</a>
-                <a href="#" class="dropdown-link">Microfiber Pillows</a>
-                <a href="#" class="dropdown-link">Down Pillows</a>
-              </div>
-              <div class="dropdown-column">
-                <h3 class="dropdown-title">Throw Blankets</h3>
-                <a href="#" class="dropdown-link">All Throws</a>
-                <a href="#" class="dropdown-link">Oversized Chunky Knit</a>
-                <a href="#" class="dropdown-link">Chunky Knit Bundle</a>
-                <a href="#" class="dropdown-link">Faux Fur Tie Dye</a>
-                <a href="#" class="dropdown-link">Herringbone Throw</a>
-                <a href="#" class="dropdown-link">Slub-Yarn Throw</a>
-              </div>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            BATH & DECOR
-            <svg class="nav-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </a>
-          <div class="nav-dropdown">
-            <div class="nav-dropdown-content">
-              <div class="dropdown-column">
-                <h3 class="dropdown-title">Bath & Towels</h3>
-                <a href="#" class="dropdown-link">All Bath</a>
-                <a href="#" class="dropdown-link">Bath Towels</a>
-                <a href="#" class="dropdown-link">Hand Towels</a>
-                <a href="#" class="dropdown-link">Washcloths</a>
-                <a href="#" class="dropdown-link">Bath Rugs</a>
-              </div>
-              <div class="dropdown-column">
-                <h3 class="dropdown-title">Decor</h3>
-                <a href="#" class="dropdown-link">Bedding Essentials</a>
-                <a href="#" class="dropdown-link">Mattress Protectors</a>
-                <a href="#" class="dropdown-link">Pillow Protectors</a>
-                <a href="#" class="dropdown-link">Bed Skirts</a>
-              </div>
-            </div>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-link">NEW ARRIVALS</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">BEST SELLERS</a>
-        </li>
-      </ul>
-    </nav>
 
     <div class="header__actions">
       <button class="header__action-btn" aria-label="Account" type="button">
@@ -516,8 +410,119 @@
       </button>
     </div>
   </div>
+
+  {%- comment -%}ROW 2: NAVIGATION{%- endcomment -%}
+  <nav class="header__bottom">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          BEDDING
+          <svg class="nav-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-content">
+            <div class="dropdown-column">
+              <h3 class="dropdown-title">Sheets</h3>
+              <a href="#" class="dropdown-link">All Sheets</a>
+              <a href="#" class="dropdown-link">NEW! Holiday Sheets</a>
+              <a href="#" class="dropdown-link">Solid Sheets</a>
+              <a href="#" class="dropdown-link">Patterned Sheets</a>
+              <a href="#" class="dropdown-link">Linen & Rayon Bamboo</a>
+              <a href="#" class="dropdown-link">Cotton Sheets</a>
+              <a href="#" class="dropdown-link">Flannel Sheets</a>
+              <a href="#" class="dropdown-link">Embossed Sheets</a>
+            </div>
+            <div class="dropdown-column">
+              <h3 class="dropdown-title">Comforters</h3>
+              <a href="#" class="dropdown-link">All Comforters</a>
+              <a href="#" class="dropdown-link">NEW! Textured</a>
+              <a href="#" class="dropdown-link">Solid Comforters</a>
+              <a href="#" class="dropdown-link">Patterned</a>
+              <a href="#" class="dropdown-link">Reversible</a>
+            </div>
+            <div class="dropdown-column">
+              <h3 class="dropdown-title">Duvets & More</h3>
+              <a href="#" class="dropdown-link">All Duvet Covers</a>
+              <a href="#" class="dropdown-link">Solid Duvet Covers</a>
+              <a href="#" class="dropdown-link">Patterned Covers</a>
+              <a href="#" class="dropdown-link">Quilts</a>
+              <a href="#" class="dropdown-link">Pillowcases</a>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          PILLOWS & THROWS
+          <svg class="nav-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-content">
+            <div class="dropdown-column">
+              <h3 class="dropdown-title">Pillows</h3>
+              <a href="#" class="dropdown-link">All Pillows</a>
+              <a href="#" class="dropdown-link">Throw Pillows</a>
+              <a href="#" class="dropdown-link">Plush Gel-Fiber</a>
+              <a href="#" class="dropdown-link">Microfiber Pillows</a>
+              <a href="#" class="dropdown-link">Down Pillows</a>
+            </div>
+            <div class="dropdown-column">
+              <h3 class="dropdown-title">Throw Blankets</h3>
+              <a href="#" class="dropdown-link">All Throws</a>
+              <a href="#" class="dropdown-link">Oversized Chunky Knit</a>
+              <a href="#" class="dropdown-link">Chunky Knit Bundle</a>
+              <a href="#" class="dropdown-link">Faux Fur Tie Dye</a>
+              <a href="#" class="dropdown-link">Herringbone Throw</a>
+              <a href="#" class="dropdown-link">Slub-Yarn Throw</a>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          BATH & DECOR
+          <svg class="nav-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-content">
+            <div class="dropdown-column">
+              <h3 class="dropdown-title">Bath & Towels</h3>
+              <a href="#" class="dropdown-link">All Bath</a>
+              <a href="#" class="dropdown-link">Bath Towels</a>
+              <a href="#" class="dropdown-link">Hand Towels</a>
+              <a href="#" class="dropdown-link">Washcloths</a>
+              <a href="#" class="dropdown-link">Bath Rugs</a>
+            </div>
+            <div class="dropdown-column">
+              <h3 class="dropdown-title">Decor</h3>
+              <a href="#" class="dropdown-link">Bedding Essentials</a>
+              <a href="#" class="dropdown-link">Mattress Protectors</a>
+              <a href="#" class="dropdown-link">Pillow Protectors</a>
+              <a href="#" class="dropdown-link">Bed Skirts</a>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link">NEW ARRIVALS</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">BEST SELLERS</a>
+      </li>
+    </ul>
+  </nav>
 </header>
 
+{%- comment -%}MOBILE MENU{%- endcomment -%}
 <nav class="mobile-menu" data-mobile-menu>
   <ul class="mobile-nav">
     <li class="mobile-nav-item">
