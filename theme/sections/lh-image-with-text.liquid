@@ -1,17 +1,17 @@
 {%- style -%}
   .lh-image-text {
     padding: 4rem 1.5rem;
-    background: #f5f5f0;
+    background: linear-gradient(90deg, #ddd6e8 0%, #f5f3f8 30%, #faf9fc 50%, #f5f3f8 70%, #ddd6e8 100%);
   }
 
   @media screen and (min-width: 750px) {
     .lh-image-text {
-      padding: 5rem;
+      padding: 6rem 5rem;
     }
   }
 
   .lh-image-text__container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr;
@@ -29,8 +29,15 @@
   .lh-image-text__image {
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    border-radius: 4px;
+    border-radius: 12px;
     background: #e5e5e0;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .lh-image-text__image:hover {
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+    transform: translateY(-4px);
   }
 
   .lh-image-text__image img,
@@ -38,18 +45,31 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .lh-image-text__image:hover img,
+  .lh-image-text__image:hover svg {
+    transform: scale(1.03);
   }
 
   .lh-image-text__content {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    padding: 2.5rem 4rem 2.5rem 2.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
   }
 
   .lh-image-text__heading {
-    font-size: 1.75rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     margin: 0;
     color: #1a1a1a;
@@ -58,12 +78,12 @@
 
   @media screen and (min-width: 750px) {
     .lh-image-text__heading {
-      font-size: 2.25rem;
+      font-size: 2.75rem;
     }
   }
 
   .lh-image-text__text {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     line-height: 1.6;
     color: #555;
     margin: 0;
@@ -73,20 +93,23 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 1rem 2rem;
+    padding: 1.25rem 2.5rem;
     background: #1a1a1a;
     color: #fff;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     transition: background 0.3s ease;
     width: fit-content;
+    border-radius: 12px;
   }
 
   .lh-image-text__button:hover {
     background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   }
 
   .lh-image-text__container--image-right .lh-image-text__image {
