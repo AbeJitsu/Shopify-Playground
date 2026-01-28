@@ -345,24 +345,55 @@
         });
       }
 
-      function goToCard(index) {
-        if (index < 0) index = totalCards - 1;
-        if (index >= totalCards) index = 0;
-        currentIndex = index;
+      function goToCard(rawIndex) {
+        var cardW = getCardWidth();
+        var wrapping = false;
 
-        var offsetPx = currentIndex * getCardWidth();
+        /* Forward wrap: last → first */
+        if (rawIndex >= totalCards) {
+          track.style.transition = 'none';
+          track.style.transform = 'translateX(-' + (currentIndex * cardW) + 'px)';
+          track.offsetHeight; /* force reflow */
+          currentIndex = 0;
+          var targetPx = totalCards * cardW; /* duplicate card 0 position */
+          track.classList.add('lh-categories__track--manual');
+          track.style.transition = '';
+          track.style.transform = 'translateX(-' + targetPx + 'px)';
+          wrapping = true;
+          /* After transition, silently reset to real card 0 */
+          setTimeout(function() {
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0px)';
+            track.offsetHeight;
+            track.style.transition = '';
+          }, 520);
 
-        track.classList.add('lh-categories__track--manual');
-        track.style.transform = 'translateX(-' + offsetPx + 'px)';
+        /* Backward wrap: first → last */
+        } else if (rawIndex < 0) {
+          /* Silently jump to duplicate of current card (index + totalCards) */
+          track.style.transition = 'none';
+          track.style.transform = 'translateX(-' + (totalCards * cardW) + 'px)';
+          track.offsetHeight;
+          currentIndex = totalCards - 1;
+          var targetPx = currentIndex * cardW;
+          track.classList.add('lh-categories__track--manual');
+          track.style.transition = '';
+          track.style.transform = 'translateX(-' + targetPx + 'px)';
+          wrapping = true;
+
+        /* Normal navigation */
+        } else {
+          currentIndex = rawIndex;
+          track.classList.add('lh-categories__track--manual');
+          track.style.transform = 'translateX(-' + (currentIndex * cardW) + 'px)';
+        }
+
         track.style.animationDelay = '';
         setActiveDot(currentIndex);
 
         clearTimeout(resumeTimer);
         resumeTimer = setTimeout(function() {
-          /* Calculate how far into the 60s animation this offset represents.
-             Total scroll distance = 50% of track width (half, since track is doubled).
-             Current offset as fraction of that = offsetPx / (track.scrollWidth / 2).
-             Negative delay = that fraction * 60s duration. */
+          var offsetPx = currentIndex * cardW;
           var totalDistance = track.scrollWidth / 2;
           var fraction = offsetPx / totalDistance;
           var delay = -(fraction * 60);
@@ -385,18 +416,18 @@
       /* Poll animation position to update dots during auto-scroll */
       var lastDotIndex = -1;
       var pill = controls;
-      var cards = track.querySelectorAll('.lh-category-card');
+      var allCards = track.querySelectorAll('.lh-category-card');
       function pollPosition() {
         if (!track.classList.contains('lh-categories__track--manual')) {
           var pillRight = pill.getBoundingClientRect().right;
           var bestIdx = 0;
           var bestDist = Infinity;
-          for (var i = 0; i < totalCards; i++) {
-            var cardLeft = cards[i].getBoundingClientRect().left;
+          for (var i = 0; i < allCards.length; i++) {
+            var cardLeft = allCards[i].getBoundingClientRect().left;
             var dist = pillRight - cardLeft;
             if (dist >= 0 && dist < bestDist) {
               bestDist = dist;
-              bestIdx = i;
+              bestIdx = i % totalCards;
             }
           }
           if (bestIdx !== lastDotIndex) {
