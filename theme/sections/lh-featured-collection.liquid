@@ -1,25 +1,31 @@
 {%- style -%}
   .lh-fc {
-    background-color: #fafaf8;
-    padding: 4rem 0;
+    padding: 5rem 0 4rem;
+    background: #fff;
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
   }
 
   @media (min-width: 750px) {
     .lh-fc {
-      padding: 5rem 0;
+      padding: 6rem 0 5rem;
     }
+  }
+
+  .lh-fc__inner {
+    max-width: none;
   }
 
   .lh-fc__header {
     text-align: center;
     margin-bottom: 3rem;
-    padding: 0 1.5rem;
   }
 
   .lh-fc__title {
-    font-size: 2rem;
-    font-weight: 400;
-    letter-spacing: 0.3em;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
     margin: 0 0 0.75rem;
     color: #1a1a1a;
@@ -27,71 +33,101 @@
 
   @media (min-width: 750px) {
     .lh-fc__title {
-      font-size: 2.5rem;
+      font-size: 1.75rem;
     }
   }
 
   .lh-fc__subtitle {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
     color: #666;
-    max-width: 600px;
     margin: 0 auto;
+    font-weight: 400;
     letter-spacing: 0.08em;
+    max-width: 600px;
+  }
+
+  @media (min-width: 750px) {
+    .lh-fc__subtitle {
+      font-size: 1.25rem;
+    }
   }
 
   /* Slider */
-  .lh-fc__slider-wrap {
-    position: relative;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 3.5rem;
-  }
-
-  .lh-fc__slider {
+  .lh-fc__slider-wrapper {
     overflow: hidden;
+    padding: 1.5rem 0;
   }
 
   .lh-fc__track {
     display: flex;
-    gap: 1.5rem;
-    transition: transform 0.5s ease;
+    width: max-content;
+    animation: lh-fc-scroll 60s linear infinite;
   }
 
+  .lh-fc__track:hover {
+    animation-play-state: paused;
+  }
+
+  .lh-fc__track--manual {
+    animation: none;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes lh-fc-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Card */
   .lh-fc__card {
-    flex: 0 0 calc(50% - 0.75rem);
-    min-width: 0;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    flex: 0 0 calc(80vw / 4);
+    padding: 0 0.75rem;
+    box-sizing: border-box;
   }
 
-  @media (min-width: 750px) {
+  @media (max-width: 749px) {
     .lh-fc__card {
-      flex: 0 0 calc(33.333% - 1rem);
+      flex: 0 0 40vw;
     }
   }
 
-  @media (min-width: 1024px) {
-    .lh-fc__card {
-      flex: 0 0 calc(25% - 1.125rem);
-    }
+  .lh-fc__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
   }
 
   /* Card image */
   .lh-fc__img-wrap {
     position: relative;
-    aspect-ratio: 1 / 1;
     overflow: hidden;
+    aspect-ratio: 1 / 1;
     background: #f0ebe3;
-    margin-bottom: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    transition: box-shadow 0.3s ease;
   }
 
   .lh-fc__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s ease;
+  }
+
+  .lh-fc__card:hover .lh-fc__img-wrap {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   }
 
   .lh-fc__card:hover .lh-fc__img {
-    transform: scale(1.03);
+    transform: scale(1.05);
   }
 
   .lh-fc__badge {
@@ -105,23 +141,38 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 0.375rem 0.75rem;
+    border-radius: 4px;
+    z-index: 1;
   }
 
   /* Card content */
   .lh-fc__name {
-    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
     font-weight: 500;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #1a1a1a;
-    margin: 0 0 0.5rem;
+    margin: 1rem 0 0.5rem;
     line-height: 1.4;
+    transition: all 0.3s ease;
   }
 
   @media (min-width: 750px) {
     .lh-fc__name {
-      font-size: 1.0625rem;
+      font-size: 0.9375rem;
     }
+  }
+
+  .lh-fc__name .arrow {
+    transition: transform 0.3s ease;
+    font-size: 1rem;
+  }
+
+  .lh-fc__card:hover .lh-fc__name .arrow {
+    transform: translateX(4px);
   }
 
   .lh-fc__stars {
@@ -179,55 +230,78 @@
     pointer-events: none;
   }
 
-  /* Link */
-  .lh-fc__link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-
-  /* Navigation arrows */
-  .lh-fc__nav {
-    position: absolute;
-    top: 35%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border: none;
-    background: transparent;
-    color: #1a1a1a;
-    cursor: pointer;
+  /* Pill Controller - matches hero slideshow */
+  .lh-fc__controls {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
+    gap: 0.5rem;
+    margin: 1.5rem auto 0;
+    width: fit-content;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .lh-fc__controls .slider-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: opacity 0.3s ease;
   }
 
-  .lh-fc__nav:hover {
+  .lh-fc__controls .slider-button:hover {
     opacity: 0.6;
   }
 
-  .lh-fc__nav:disabled {
-    opacity: 0.2;
-    cursor: not-allowed;
+  .lh-fc__controls .slider-button svg {
+    width: 10px;
+    height: 10px;
+    opacity: 0.6;
   }
 
-  .lh-fc__nav--prev {
-    left: 0;
+  .lh-fc__controls .slider-button--prev svg {
+    transform: rotate(90deg);
   }
 
-  .lh-fc__nav--next {
-    right: 0;
+  .lh-fc__controls .slider-button--next svg {
+    transform: rotate(-90deg);
   }
 
-  /* Pagination */
-  .lh-fc__pagination {
-    text-align: center;
-    margin-top: 2rem;
-    font-size: 0.875rem;
-    color: #666;
-    letter-spacing: 0.05em;
+  .lh-fc__dots {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .lh-fc__dot {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+  }
+
+  .lh-fc__dot .dot {
+    width: 6px;
+    height: 6px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.3s ease;
+  }
+
+  .lh-fc__dot--active .dot,
+  .lh-fc__dot:hover .dot {
+    background: rgba(0,0,0,0.7);
+    transform: scale(1.15);
   }
 
   /* View all */
@@ -253,169 +327,198 @@
   }
 {%- endstyle -%}
 
+{%- comment -%}Count fallback products for JS{%- endcomment -%}
+{%- assign fallback_count = 7 -%}
+{%- if section.blocks.size > 0 -%}
+  {%- assign product_count = section.blocks.size -%}
+{%- else -%}
+  {%- assign product_count = fallback_count -%}
+{%- endif -%}
+
 <section class="lh-fc" id="FeaturedCollection-{{ section.id }}">
-  <div class="lh-fc__header">
-    <h2 class="lh-fc__title">{{ section.settings.title }}</h2>
-    {% if section.settings.subtitle != blank %}
-      <p class="lh-fc__subtitle">{{ section.settings.subtitle }}</p>
-    {% endif %}
-  </div>
+  <div class="lh-fc__inner">
+    <div class="lh-fc__header">
+      <h2 class="lh-fc__title">{{ section.settings.title }}</h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="lh-fc__subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
 
-  <div class="lh-fc__slider-wrap">
-    <button class="lh-fc__nav lh-fc__nav--prev" aria-label="Previous" data-slider-prev>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18L9 12L15 6"/></svg>
-    </button>
+    <div class="lh-fc__slider-wrapper">
+      <div class="lh-fc__track" id="FCTrack-{{ section.id }}">
+        {%- comment -%}Render twice for seamless infinite loop{%- endcomment -%}
+        {%- for iteration in (1..2) -%}
+          {% if section.blocks.size > 0 %}
+            {% for block in section.blocks %}
+              <div class="lh-fc__card" {% if iteration == 1 %}{{ block.shopify_attributes }}{% endif %}>
+                <a href="{{ block.settings.product_link | default: '#' }}" class="lh-fc__link">
+                  <div class="lh-fc__img-wrap">
+                    {% if block.settings.product_image %}
+                      <img
+                        src="{{ block.settings.product_image | image_url: width: 800 }}"
+                        alt="{{ block.settings.product_title }}"
+                        class="lh-fc__img"
+                        loading="lazy"
+                      >
+                    {% endif %}
+                  </div>
+                </a>
+                <h3 class="lh-fc__name">{{ block.settings.product_title }} <span class="arrow">&rarr;</span></h3>
+                <div class="lh-fc__stars">
+                  <svg width="80" height="14" viewBox="0 0 80 14" fill="currentColor"><path d="M7 0l2.2 4.4L14 5.1l-3.5 3.4.8 4.8L7 11l-4.3 2.3.8-4.8L0 5.1l4.8-.7L7 0zm16 0l2.2 4.4L30 5.1l-3.5 3.4.8 4.8L23 11l-4.3 2.3.8-4.8L16 5.1l4.8-.7L23 0zm16 0l2.2 4.4L46 5.1l-3.5 3.4.8 4.8L39 11l-4.3 2.3.8-4.8L32 5.1l4.8-.7L39 0zm16 0l2.2 4.4L62 5.1l-3.5 3.4.8 4.8L55 11l-4.3 2.3.8-4.8L48 5.1l4.8-.7L55 0zm16 0l2.2 4.4L78 5.1l-3.5 3.4.8 4.8L71 11l-4.3 2.3.8-4.8L64 5.1l4.8-.7L71 0z"/></svg>
+                  <span>{{ block.settings.product_rating | default: '★★★★★' }}</span>
+                </div>
+                <p class="lh-fc__price">{{ block.settings.product_price }}</p>
+              </div>
+            {% endfor %}
+          {% else %}
+            {%- assign products_data = 'Cloud Weave Textured Down-Alternative Comforter Set|just-in-1|From $179.00|69 Reviews|#d4c9b8,#c4b9a3,#7a7a5e,#c5c5c5,#6a7a8a;Seersucker Box Textured Down-Alternative Comforter Set|just-in-2|From $179.00|120 Reviews|#7a9aaa,#8a9a7a,#c9a0a0,#e8e8e8;Waffle Textured Down-Alternative Comforter Set|just-in-3|From $179.00|1,576 Reviews|#9aaa9a,#b08a8a,#3a3a5a,#e8e8e8,#7a9aaa,#c4b9a3,#c5c5c5;Mulberry Silk Pillowcases|just-in-4|From $135.00|13 Reviews|#f0ebe3,#c0c0c0,#d4a0a0,#8a9aaa;100% Cotton Percale Sheet Set|just-in-5|From $125.00|Reviews|#8aaaba,#8aaa8a,#f0ebe3,#c5c5c5;Cotton Jersey Knit Sheets|just-in-6|From $166.00|Reviews|#2a2a4a,#8a8a8a,#c5c5c5,#d4c9b8;4-Piece Long Staple 100% Cotton Sheet Set|just-in-7|From $189.00|Reviews|#c5c5c5,#9aaa9a,#7a9aaa,#f0ebe3' | split: ';' -%}
 
-    <div class="lh-fc__slider">
-      <div class="lh-fc__track" data-slider-track>
-        {% if section.blocks.size > 0 %}
-          {% for block in section.blocks %}
-            <div class="lh-fc__card" {{ block.shopify_attributes }}>
-              <a href="{{ block.settings.product_link | default: '#' }}" class="lh-fc__link">
-                <div class="lh-fc__img-wrap">
-                  {% if block.settings.product_image %}
+            {%- for product_str in products_data -%}
+              {%- assign p = product_str | split: '|' -%}
+              {%- assign p_name = p[0] -%}
+              {%- assign p_img_prefix = p[1] -%}
+              {%- assign p_price = p[2] -%}
+              {%- assign p_reviews = p[3] -%}
+              {%- assign p_colors = p[4] | split: ',' -%}
+              <div class="lh-fc__card" data-product-card>
+                <a href="#" class="lh-fc__link">
+                  <div class="lh-fc__img-wrap">
+                    {%- if forloop.index == 4 -%}
+                      <span class="lh-fc__badge">New Arrival</span>
+                    {%- endif -%}
                     <img
-                      src="{{ block.settings.product_image | image_url: width: 800 }}"
-                      alt="{{ block.settings.product_title }}"
+                      src="{{ p_img_prefix | append: '-primary.jpg' | asset_url }}"
+                      alt="{{ p_name }}"
                       class="lh-fc__img"
                       loading="lazy"
+                      data-primary-src="{{ p_img_prefix | append: '-primary.jpg' | asset_url }}"
+                      data-variant-1-src="{{ p_img_prefix | append: '-variant-1.jpg' | asset_url }}"
+                      data-variant-2-src="{{ p_img_prefix | append: '-variant-2.jpg' | asset_url }}"
+                      data-variant-3-src="{{ p_img_prefix | append: '-variant-3.jpg' | asset_url }}"
                     >
-                  {% endif %}
+                  </div>
+                </a>
+                <h3 class="lh-fc__name">{{ p_name }} <span class="arrow">&rarr;</span></h3>
+                <div class="lh-fc__stars">
+                  <svg width="80" height="14" viewBox="0 0 80 14" fill="currentColor"><path d="M7 0l2.2 4.4L14 5.1l-3.5 3.4.8 4.8L7 11l-4.3 2.3.8-4.8L0 5.1l4.8-.7L7 0zm16 0l2.2 4.4L30 5.1l-3.5 3.4.8 4.8L23 11l-4.3 2.3.8-4.8L16 5.1l4.8-.7L23 0zm16 0l2.2 4.4L46 5.1l-3.5 3.4.8 4.8L39 11l-4.3 2.3.8-4.8L32 5.1l4.8-.7L39 0zm16 0l2.2 4.4L62 5.1l-3.5 3.4.8 4.8L55 11l-4.3 2.3.8-4.8L48 5.1l4.8-.7L55 0zm16 0l2.2 4.4L78 5.1l-3.5 3.4.8 4.8L71 11l-4.3 2.3.8-4.8L64 5.1l4.8-.7L71 0z"/></svg>
+                  <span>{{ p_reviews }}</span>
                 </div>
-              </a>
-              <h3 class="lh-fc__name">{{ block.settings.product_title }}</h3>
-              <div class="lh-fc__stars">
-                <svg width="80" height="14" viewBox="0 0 80 14" fill="currentColor"><path d="M7 0l2.2 4.4L14 5.1l-3.5 3.4.8 4.8L7 11l-4.3 2.3.8-4.8L0 5.1l4.8-.7L7 0zm16 0l2.2 4.4L30 5.1l-3.5 3.4.8 4.8L23 11l-4.3 2.3.8-4.8L16 5.1l4.8-.7L23 0zm16 0l2.2 4.4L46 5.1l-3.5 3.4.8 4.8L39 11l-4.3 2.3.8-4.8L32 5.1l4.8-.7L39 0zm16 0l2.2 4.4L62 5.1l-3.5 3.4.8 4.8L55 11l-4.3 2.3.8-4.8L48 5.1l4.8-.7L55 0zm16 0l2.2 4.4L78 5.1l-3.5 3.4.8 4.8L71 11l-4.3 2.3.8-4.8L64 5.1l4.8-.7L71 0z"/></svg>
-                <span>{{ block.settings.product_rating | default: '★★★★★' }}</span>
-              </div>
-              <p class="lh-fc__price">{{ block.settings.product_price }}</p>
-            </div>
-          {% endfor %}
-        {% else %}
-          {%- comment -%} Fallback products with downloaded images {%- endcomment -%}
-          {%- assign products_data = 'Cloud Weave Textured Down-Alternative Comforter Set|just-in-1|From $179.00|69 Reviews|#d4c9b8,#c4b9a3,#7a7a5e,#c5c5c5,#6a7a8a;Seersucker Box Textured Down-Alternative Comforter Set|just-in-2|From $179.00|120 Reviews|#7a9aaa,#8a9a7a,#c9a0a0,#e8e8e8;Waffle Textured Down-Alternative Comforter Set|just-in-3|From $179.00|1,576 Reviews|#9aaa9a,#b08a8a,#3a3a5a,#e8e8e8,#7a9aaa,#c4b9a3,#c5c5c5;Mulberry Silk Pillowcases|just-in-4|From $135.00|13 Reviews|#f0ebe3,#c0c0c0,#d4a0a0,#8a9aaa;100% Cotton Percale Sheet Set|just-in-5|From $125.00|Reviews|#8aaaba,#8aaa8a,#f0ebe3,#c5c5c5;Cotton Jersey Knit Sheets|just-in-6|From $166.00|Reviews|#2a2a4a,#8a8a8a,#c5c5c5,#d4c9b8;4-Piece Long Staple 100% Cotton Sheet Set|just-in-7|From $189.00|Reviews|#c5c5c5,#9aaa9a,#7a9aaa,#f0ebe3' | split: ';' -%}
-
-          {%- for product_str in products_data -%}
-            {%- assign p = product_str | split: '|' -%}
-            {%- assign p_name = p[0] -%}
-            {%- assign p_img_prefix = p[1] -%}
-            {%- assign p_price = p[2] -%}
-            {%- assign p_reviews = p[3] -%}
-            {%- assign p_colors = p[4] | split: ',' -%}
-            <div class="lh-fc__card" data-product-card>
-              <a href="#" class="lh-fc__link">
-                <div class="lh-fc__img-wrap">
-                  {%- if forloop.index == 4 -%}
-                    <span class="lh-fc__badge">New Arrival</span>
-                  {%- endif -%}
-                  <img
-                    src="{{ p_img_prefix | append: '-primary.jpg' | asset_url }}"
-                    alt="{{ p_name }}"
-                    class="lh-fc__img"
-                    loading="lazy"
-                    data-primary-src="{{ p_img_prefix | append: '-primary.jpg' | asset_url }}"
-                    data-variant-1-src="{{ p_img_prefix | append: '-variant-1.jpg' | asset_url }}"
-                    data-variant-2-src="{{ p_img_prefix | append: '-variant-2.jpg' | asset_url }}"
-                    data-variant-3-src="{{ p_img_prefix | append: '-variant-3.jpg' | asset_url }}"
-                  >
+                <p class="lh-fc__price">{{ p_price }}</p>
+                <div class="lh-fc__swatches">
+                  {%- for color in p_colors -%}
+                    <button
+                      class="lh-fc__swatch{% if forloop.first %} active{% endif %}"
+                      data-variant-index="{{ forloop.index0 }}"
+                      aria-label="Color {{ forloop.index }}"
+                    >
+                      <span class="lh-fc__swatch-inner" style="background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.35), {{ color }} 60%, rgba(0,0,0,0.15));"></span>
+                    </button>
+                  {%- endfor -%}
                 </div>
-              </a>
-              <h3 class="lh-fc__name">{{ p_name }}</h3>
-              <div class="lh-fc__stars">
-                <svg width="80" height="14" viewBox="0 0 80 14" fill="currentColor"><path d="M7 0l2.2 4.4L14 5.1l-3.5 3.4.8 4.8L7 11l-4.3 2.3.8-4.8L0 5.1l4.8-.7L7 0zm16 0l2.2 4.4L30 5.1l-3.5 3.4.8 4.8L23 11l-4.3 2.3.8-4.8L16 5.1l4.8-.7L23 0zm16 0l2.2 4.4L46 5.1l-3.5 3.4.8 4.8L39 11l-4.3 2.3.8-4.8L32 5.1l4.8-.7L39 0zm16 0l2.2 4.4L62 5.1l-3.5 3.4.8 4.8L55 11l-4.3 2.3.8-4.8L48 5.1l4.8-.7L55 0zm16 0l2.2 4.4L78 5.1l-3.5 3.4.8 4.8L71 11l-4.3 2.3.8-4.8L64 5.1l4.8-.7L71 0z"/></svg>
-                <span>{{ p_reviews }}</span>
               </div>
-              <p class="lh-fc__price">{{ p_price }}</p>
-              <div class="lh-fc__swatches">
-                {%- for color in p_colors -%}
-                  <button
-                    class="lh-fc__swatch{% if forloop.first %} active{% endif %}"
-                    data-variant-index="{{ forloop.index0 }}"
-                    aria-label="Color {{ forloop.index }}"
-                  >
-                    <span class="lh-fc__swatch-inner" style="background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.35), {{ color }} 60%, rgba(0,0,0,0.15));"></span>
-                  </button>
-                {%- endfor -%}
-              </div>
-            </div>
-          {%- endfor -%}
-        {% endif %}
+            {%- endfor -%}
+          {% endif %}
+        {%- endfor -%}
       </div>
     </div>
 
-    <button class="lh-fc__nav lh-fc__nav--next" aria-label="Next" data-slider-next>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6L15 12L9 18"/></svg>
-    </button>
-  </div>
-
-  <div class="lh-fc__pagination" data-slider-pagination></div>
-
-  {% if section.settings.view_all_link != blank %}
-    <div class="lh-fc__view-all">
-      <a href="{{ section.settings.view_all_link }}">View All</a>
+    <div class="lh-fc__controls" id="FCControls-{{ section.id }}">
+      <button type="button" class="slider-button slider-button--prev" aria-label="Previous">
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
+      <div class="lh-fc__dots">
+        {%- for i in (1..product_count) -%}
+          <button
+            class="lh-fc__dot{% if forloop.first %} lh-fc__dot--active{% endif %}"
+            aria-label="Go to product {{ forloop.index }}"
+            data-index="{{ forloop.index0 }}"
+          >
+            <span class="dot"></span>
+          </button>
+        {%- endfor -%}
+      </div>
+      <button type="button" class="slider-button slider-button--next" aria-label="Next">
+        <span class="svg-wrapper">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </button>
     </div>
-  {% endif %}
+
+    {% if section.settings.view_all_link != blank %}
+      <div class="lh-fc__view-all">
+        <a href="{{ section.settings.view_all_link }}">View All</a>
+      </div>
+    {% endif %}
+  </div>
 </section>
 
 <script>
   (function() {
-    function initFeaturedCollection() {
-      document.querySelectorAll('.lh-fc').forEach(function(section) {
-        if (section.dataset.initialized) return;
-        section.dataset.initialized = 'true';
+    var sectionId = '{{ section.id }}';
+    var totalCards = {{ product_count }};
 
-        var track = section.querySelector('[data-slider-track]');
-        var prevBtn = section.querySelector('[data-slider-prev]');
-        var nextBtn = section.querySelector('[data-slider-next]');
-        var pagination = section.querySelector('[data-slider-pagination]');
-        var cards = track ? track.querySelectorAll('.lh-fc__card') : [];
+    function init() {
+      var track = document.getElementById('FCTrack-' + sectionId);
+      var controls = document.getElementById('FCControls-' + sectionId);
+      var section = document.getElementById('FeaturedCollection-' + sectionId);
+      if (!track || !controls || track.dataset.initialized) return;
+      track.dataset.initialized = 'true';
 
-        if (!track || cards.length === 0) return;
+      var prevBtn = controls.querySelector('.slider-button--prev');
+      var nextBtn = controls.querySelector('.slider-button--next');
+      var dots = controls.querySelectorAll('.lh-fc__dot');
+      var resumeTimer = null;
+      var currentIndex = 0;
 
-        var currentIndex = 0;
+      function getCardWidth() {
+        var card = track.querySelector('.lh-fc__card');
+        return card ? card.offsetWidth : 0;
+      }
 
-        function getVisible() {
-          var w = window.innerWidth;
-          if (w < 750) return 2;
-          if (w < 1024) return 3;
-          return 4;
-        }
-
-        function getMaxIndex() {
-          return Math.max(0, cards.length - getVisible());
-        }
-
-        function update() {
-          var visible = getVisible();
-          var gap = 1.5;
-          var cardPercent = 100 / visible;
-          var gapOffset = (gap * 16 * currentIndex) / track.parentElement.offsetWidth * 100;
-          track.style.transform = 'translateX(-' + (currentIndex * cardPercent + gapOffset) + '%)';
-
-          if (prevBtn) prevBtn.disabled = currentIndex === 0;
-          if (nextBtn) nextBtn.disabled = currentIndex >= getMaxIndex();
-
-          var totalPages = Math.ceil(cards.length / visible);
-          var currentPage = Math.floor(currentIndex / visible) + 1;
-          if (pagination) pagination.textContent = currentPage + '/' + totalPages;
-        }
-
-        if (prevBtn) prevBtn.addEventListener('click', function() {
-          if (currentIndex > 0) { currentIndex--; update(); }
+      function setActiveDot(index) {
+        dots.forEach(function(d, i) {
+          d.classList.toggle('lh-fc__dot--active', i === index);
         });
+      }
 
-        if (nextBtn) nextBtn.addEventListener('click', function() {
-          if (currentIndex < getMaxIndex()) { currentIndex++; update(); }
+      function goToCard(index) {
+        if (index < 0) index = totalCards - 1;
+        if (index >= totalCards) index = 0;
+        currentIndex = index;
+
+        var offsetPx = currentIndex * getCardWidth();
+
+        track.classList.add('lh-fc__track--manual');
+        track.style.transform = 'translateX(-' + offsetPx + 'px)';
+        track.style.animationDelay = '';
+        setActiveDot(currentIndex);
+
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(function() {
+          var totalDistance = track.scrollWidth / 2;
+          var fraction = offsetPx / totalDistance;
+          var delay = -(fraction * 60);
+
+          track.style.transform = '';
+          track.style.animationDelay = delay + 's';
+          track.classList.remove('lh-fc__track--manual');
+        }, 6000);
+      }
+
+      prevBtn.addEventListener('click', function() { goToCard(currentIndex - 1); });
+      nextBtn.addEventListener('click', function() { goToCard(currentIndex + 1); });
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          goToCard(parseInt(this.dataset.index));
         });
+      });
 
-        window.addEventListener('resize', function() {
-          currentIndex = Math.min(currentIndex, getMaxIndex());
-          update();
-        });
-
-        update();
-
-        /* Color swatch image swapping */
+      /* Color swatch image swapping */
+      if (section) {
         section.querySelectorAll('[data-product-card]').forEach(function(card) {
           var img = card.querySelector('.lh-fc__img');
           var swatches = card.querySelectorAll('.lh-fc__swatch');
@@ -442,13 +545,13 @@
             });
           });
         });
-      });
+      }
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initFeaturedCollection);
+      document.addEventListener('DOMContentLoaded', init);
     } else {
-      initFeaturedCollection();
+      init();
     }
   })();
 </script>
