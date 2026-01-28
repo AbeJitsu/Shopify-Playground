@@ -3,20 +3,21 @@
 {%- style -%}
   /* Linens & Hutch Category Grid Styles */
   .lh-categories {
-    padding: 5rem 1.5rem 4rem;
+    padding: 5rem 0 4rem;
     background: #fff;
     overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
   }
 
   @media screen and (min-width: 750px) {
     .lh-categories {
-      padding: 6rem 3rem 5rem;
+      padding: 6rem 0 5rem;
     }
   }
 
   .lh-categories__inner {
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: none;
   }
 
   .lh-categories__header {
@@ -80,14 +81,14 @@
     text-decoration: none;
     display: block;
     position: relative;
-    flex: 0 0 300px;
+    flex: 0 0 calc(80vw / 4);
     padding: 0 0.75rem;
     box-sizing: border-box;
   }
 
   @media screen and (max-width: 749px) {
     .lh-category-card {
-      flex: 0 0 200px;
+      flex: 0 0 40vw;
     }
   }
 
