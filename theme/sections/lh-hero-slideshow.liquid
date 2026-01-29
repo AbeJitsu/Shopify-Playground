@@ -77,18 +77,18 @@
     .lh-hero__content {
       min-height: 750px;
       max-height: 950px;
-      padding: 5rem 18rem;
+      padding: 5rem clamp(3rem, 8vw, 18rem);
     }
   }
 
   .lh-hero__text {
-    max-width: 550px;
+    max-width: min(500px, 40vw);
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 16px;
-    padding: 2.5rem;
+    padding: clamp(1.25rem, 2.5vw, 2.5rem);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
@@ -125,13 +125,7 @@
 
   @media screen and (min-width: 750px) {
     .lh-hero__heading {
-      font-size: 3rem;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    .lh-hero__heading {
-      font-size: 3.5rem;
+      font-size: clamp(1.75rem, 3.2vw, 3.5rem);
     }
   }
 
@@ -147,7 +141,7 @@
 
   @media screen and (min-width: 750px) {
     .lh-hero__subheading {
-      font-size: 1.375rem;
+      font-size: clamp(0.85rem, 1.2vw, 1.375rem);
     }
   }
 
@@ -169,8 +163,8 @@
 
   @media screen and (min-width: 750px) {
     .lh-hero__button {
-      font-size: 1.125rem;
-      padding: 1.5rem 3rem;
+      font-size: clamp(0.875rem, 1vw, 1.125rem);
+      padding: clamp(0.85rem, 1.2vw, 1.5rem) clamp(1.5rem, 2.5vw, 3rem);
     }
   }
 
