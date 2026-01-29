@@ -13,17 +13,23 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 3rem 2.5rem;
+    padding: 0.5rem 1.5rem;
     max-width: 1400px;
     margin: 0 auto;
+  }
+
+  @media screen and (min-width: 1400px) {
+    .lh-header__wrapper {
+      padding: 1rem 2.5rem;
+    }
   }
 
   .lh-header__left,
   .lh-header__right {
     display: flex;
     align-items: center;
-    gap: 1.75rem;
-    min-width: 140px;
+    gap: 1rem;
+    min-width: 80px;
   }
 
   .lh-header__left {
@@ -45,23 +51,23 @@
   }
 
   .lh-header__logo-image {
-    height: 70px;
+    height: 40px;
     width: auto;
-    max-width: 240px;
+    max-width: 150px;
     object-fit: contain;
   }
 
   @media screen and (min-width: 750px) {
     .lh-header__logo-image {
-      height: 80px;
-      max-width: 300px;
+      height: 45px;
+      max-width: 170px;
     }
   }
 
-  @media screen and (min-width: 990px) {
+  @media screen and (min-width: 1400px) {
     .lh-header__logo-image {
-      height: 100px;
-      max-width: 360px;
+      height: 65px;
+      max-width: 260px;
     }
   }
 
@@ -91,8 +97,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -136,17 +142,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     list-style: none;
     margin: 0;
-    padding: 0.75rem 2rem;
+    padding: 0.4rem 1.5rem;
     max-width: 1400px;
     margin: 0 auto;
   }
 
   @media screen and (min-width: 990px) {
     .lh-nav__list {
-      gap: 3.5rem;
+      gap: 1.75rem;
     }
   }
 
@@ -157,22 +163,22 @@
   .lh-nav__link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 1rem;
+    gap: 0.3rem;
+    font-size: 0.7rem;
     font-weight: 500;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #1a1a1a;
     text-decoration: none;
-    padding: 0.5rem 0;
+    padding: 0.3rem 0;
     border-bottom: 1px solid transparent;
     transition: all 0.3s ease;
   }
 
   @media screen and (min-width: 990px) {
     .lh-nav__link {
-      font-size: 1.25rem;
-      letter-spacing: 0.15em;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
     }
   }
 
